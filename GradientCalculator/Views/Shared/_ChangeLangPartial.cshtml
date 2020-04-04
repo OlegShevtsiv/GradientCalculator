@@ -1,0 +1,15 @@
+﻿@model ChangeLangVM
+<form asp-controller="Values" asp-action="ChangeCulture" method="post">
+    @{
+        string currentLang = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.ToLower();
+    }
+    <input type="text" asp-for="url" value="@(Context.Request.Path.Value + Context.Request.QueryString.Value)" hidden />
+
+    <select class="localization" asp-for="newCulture" onchange="this.form.submit()">
+        <option value="@currentLang.ToUpper()" selected disabled>@currentLang.ToUpper()</option>
+        @foreach (var l in ValuesController.GetAvLang(currentLang))
+        {
+            <option value="@l.nativeLang">@l.publicLang</option>
+        }
+    </select>
+</form>

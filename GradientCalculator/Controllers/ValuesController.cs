@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
-using System.Linq;
+using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
 using GradientCalculator.Configs;
 using GradientCalculator.Models;
 using GradientCalculator.ViewModels;
+using ImageController;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradientCalculator.Controllers
@@ -14,6 +14,7 @@ namespace GradientCalculator.Controllers
     public class ValuesController : Controller
     {
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult ChangeCulture(ChangeLangVM model)
         {
 
@@ -79,5 +80,47 @@ namespace GradientCalculator.Controllers
 
             return url;
         }
+
+
+        //[Route("/t")]
+        //public object test() 
+        //{
+        //    FileInfo fileInfo = new FileInfo(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\en.png");
+
+        //    byte[] data = new byte[fileInfo.Length];
+
+        //    using (FileStream fs = fileInfo.OpenRead())
+        //    {
+        //        fs.Read(data, 0, data.Length);
+        //    }
+
+        //    var res = Methods.ResizeImage(50, 20, data);
+
+        //    using (var ms = new MemoryStream(res))
+        //    {
+        //        Image.FromStream(ms).Save(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\en1.png");
+        //    }
+
+
+        //    fileInfo = new FileInfo(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\uk.png");
+
+        //    data = new byte[fileInfo.Length];
+
+        //    using (FileStream fs = fileInfo.OpenRead())
+        //    {
+        //        fs.Read(data, 0, data.Length);
+        //    }
+
+        //    res = Methods.ResizeImage(50, 20, data);
+
+        //    using (var ms = new MemoryStream(res))
+        //    {
+        //        Image.FromStream(ms).Save(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\uk1.png");
+        //    }
+
+
+
+        //    return null;
+        //}
     }
 }

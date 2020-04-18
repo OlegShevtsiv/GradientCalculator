@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using GradientCalculator.Models;
 using GradientCalculator.Middlewares.Filters;
 using System.Threading;
+using GradientCalculator.Configs;
 
 namespace GradientCalculator.Controllers
 {
@@ -28,6 +29,12 @@ namespace GradientCalculator.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        public IActionResult Plot2D()
+        {
+            ViewBag.Lang = (string)HttpContext.Items[co.CookieLangFieldName];
             return View();
         }
 

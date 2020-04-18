@@ -49,14 +49,20 @@ namespace GradientCalculator.Middlewares.Filters
                     case "EN":
                         _logger.LogInformation($"Setting the culture from the URL: {co.Lang_EN}");
                         context.HttpContext.Response.Cookies.Append(co.CookieLangFieldName, "en", options);
+                        context.HttpContext.Items[co.CookieLangFieldName] = "en";
+
                         break;
                     case "UK":
                         _logger.LogInformation($"Setting the culture from the URL: {co.DefaultLang_UA}");
                         context.HttpContext.Response.Cookies.Append(co.CookieLangFieldName, "uk", options);
+                        context.HttpContext.Items[co.CookieLangFieldName] = "uk";
+
                         break;
                     case "UA":
                         _logger.LogInformation($"Setting the culture from the URL: {co.DefaultLang_UA}");
                         context.HttpContext.Response.Cookies.Append(co.CookieLangFieldName, "uk", options);
+                        context.HttpContext.Items[co.CookieLangFieldName] = "uk";
+
                         break;
                     default:
                         _logger.LogInformation($"Unknown culture '{culture}'! Setting the default culture.");

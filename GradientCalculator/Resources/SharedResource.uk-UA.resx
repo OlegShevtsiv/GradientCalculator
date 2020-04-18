@@ -117,7 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="2DPlot_nav" xml:space="preserve">
+    <value>2D Графер</value>
+  </data>
+  <data name="cratedBy_footer" xml:space="preserve">
+    <value>робота Олега Шевціва</value>
+  </data>
   <data name="current_lang" xml:space="preserve">
     <value>Українська</value>
+  </data>
+  <data name="gradientDescend_nav_select_option" xml:space="preserve">
+    <value>Градієнтний спуск</value>
+  </data>
+  <data name="gradientDescend_page_title" xml:space="preserve">
+    <value>Градієнтний спуск</value>
+  </data>
+  <data name="homePage_page_title" xml:space="preserve">
+    <value>Головна</value>
+  </data>
+  <data name="methods_nav" xml:space="preserve">
+    <value>Методи</value>
+  </data>
+  <data name="newton_nav_select_option" xml:space="preserve">
+    <value>Метод Ньютона</value>
+  </data>
+  <data name="newton_page_title" xml:space="preserve">
+    <value>Метод Ньютона</value>
   </data>
 </root>

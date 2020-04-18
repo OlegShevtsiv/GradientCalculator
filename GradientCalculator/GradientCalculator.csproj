@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\img\" />
+    <ProjectReference Include="..\GradientMethods\GradientMethods.csproj" />
+    <ProjectReference Include="..\ImageController\ImageController.csproj" />
   </ItemGroup>
 
 

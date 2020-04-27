@@ -120,11 +120,50 @@
   <data name="2DPlot_nav" xml:space="preserve">
     <value>2D Графер</value>
   </data>
+  <data name="Accuracy" xml:space="preserve">
+    <value>Точність</value>
+  </data>
+  <data name="calculation_error" xml:space="preserve">
+    <value>Помилка обчислень!</value>
+  </data>
+  <data name="constant_not_found" xml:space="preserve">
+    <value>Константа не знайдена!</value>
+  </data>
   <data name="cratedBy_footer" xml:space="preserve">
     <value>робота Олега Шевціва</value>
   </data>
   <data name="current_lang" xml:space="preserve">
     <value>Українська</value>
+  </data>
+  <data name="Equation" xml:space="preserve">
+    <value>Рівняння</value>
+  </data>
+  <data name="equation_doesnt_contain_any_variables" xml:space="preserve">
+    <value>Рівняння не містить змінних.</value>
+  </data>
+  <data name="equation_is_empthy" xml:space="preserve">
+    <value>Рівняння порожнє!</value>
+  </data>
+  <data name="equation_is_not_valid" xml:space="preserve">
+    <value>Рівняння не коректне!</value>
+  </data>
+  <data name="equation_not_valid_amounts_of_)_and_(_are_not_equal" xml:space="preserve">
+    <value>Рівняння некоректне! Кількість ')' та '(' не однакові!</value>
+  </data>
+  <data name="equation_not_valid_it_contains_not_allowed_cyrillic_symbols" xml:space="preserve">
+    <value>Рівняння некоректне! Кириличні символи заборонені!</value>
+  </data>
+  <data name="equation_not_valid_it_has_to_contains_variables_matching_pattern_X_(_number_0__9_)_" xml:space="preserve">
+    <value>Рівняння некоректне! Воно повинне містити змінні, що відповідають шаблону 'X{numer=0..9}'!</value>
+  </data>
+  <data name="error_braket_missing" xml:space="preserve">
+    <value>Помилка !!! Недостатньо дужок!</value>
+  </data>
+  <data name="error_creating_value_of_variable" xml:space="preserve">
+    <value>Помилка створення значення змінної!</value>
+  </data>
+  <data name="error_geting_constant" xml:space="preserve">
+    <value>Помилка отримання константи!</value>
   </data>
   <data name="gradientDescend_nav_select_option" xml:space="preserve">
     <value>Градієнтний спуск</value>
@@ -135,6 +174,9 @@
   <data name="homePage_page_title" xml:space="preserve">
     <value>Головна</value>
   </data>
+  <data name="incorect_input_list_of_variable_values" xml:space="preserve">
+    <value>Вхідні значення змінних некоректні!</value>
+  </data>
   <data name="methods_nav" xml:space="preserve">
     <value>Методи</value>
   </data>
@@ -143,5 +185,8 @@
   </data>
   <data name="newton_page_title" xml:space="preserve">
     <value>Метод Ньютона</value>
+  </data>
+  <data name="this_is_required_field" xml:space="preserve">
+    <value>Це поле обов'язкове!</value>
   </data>
 </root>

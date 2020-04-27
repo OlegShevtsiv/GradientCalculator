@@ -11,7 +11,7 @@ namespace GradientMethods
             try
             {
                 Equation eq = new Equation("0.1*(x1-x2^2)^2+(1.5-x2^2)^2");
-
+                
                 Console.WriteLine(eq);
 
                 Dictionary<char, double> inputVars;
@@ -32,7 +32,6 @@ namespace GradientMethods
                         Console.Write($"------ {v} = ");
                         inputVars.Add(Equation.VarsConvertList[v.Index], Convert.ToDouble(Console.ReadLine()));
                         Console.WriteLine();
-
                     }
 
                     Console.WriteLine("============== RESULTS ==============");

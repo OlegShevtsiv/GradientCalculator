@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GradientMethods.ExceptionResult;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -14,7 +15,7 @@ namespace GradientMethods
         {
             if (value.Length != 2 || !int.TryParse(value[1].ToString(), out var res))
             {
-                throw new Exception("Error creating value of variable!");
+                throw new EquationException("Error creating value of variable!", "error_creating_value_of_variable");
             }
 
             this.Name = value[0];
@@ -62,7 +63,7 @@ namespace GradientMethods
 
             if (valuesOfVariables.Count != this.vars.Count)
             {
-                throw new Exception("Incorect input list of variable values!");
+                throw new EquationException("Incorect input list of variable values!", "incorect_input_list_of_variable_values");
             }
 
             foreach (var el in this.Constants)
@@ -101,7 +102,7 @@ namespace GradientMethods
                 else if (this.isOperator(Equa[i]))
                 {
                     char curop = Equa[i];
-                    if (may_unary && (i == 0 || !Char.IsLetterOrDigit(Equa[i - 1])))
+                    if (may_unary && (i == 0 || !char.IsLetterOrDigit(Equa[i - 1])))
                     {
                         curop = (char)(-curop);
                     }
@@ -119,12 +120,12 @@ namespace GradientMethods
                 {
                     string operand = string.Empty;
 
-                    if (Char.IsLetter(Equa[i]))
+                    if (char.IsLetter(Equa[i]))
                     {
                         operand = Equa[i].ToString();
                         operands.Push(valuesOfVariables[operand[0]].ToString());
                     }
-                    else if (Char.IsDigit(Equa[i]))
+                    else if (char.IsDigit(Equa[i]))
                     {
                         operand = this.GetConstant(Equa, out i, i);
                         operands.Push(operand);
@@ -137,6 +138,11 @@ namespace GradientMethods
             {
                 this.CalcProcessIteration(ref operands, valuesOfVariables, operations.First());
                 operations.Pop();
+            }
+
+            if (operands.Count != 1) 
+            {
+                throw new EquationException("Equation is not valid!", "equation_is_not_valid");
             }
 
             double res;
@@ -169,14 +175,14 @@ namespace GradientMethods
 
         private string GetConstant(string str, out int lastIndex, int startIndex = 0)
         {
-            if (string.IsNullOrEmpty(str) || !Char.IsDigit(str[startIndex]))
+            if (string.IsNullOrEmpty(str) || !char.IsDigit(str[startIndex]))
             {
-                throw new Exception("Constant not found!");
+                throw new EquationException("Constant not found!", "constant_not_found");
             }
             else
             {
                 string numb = string.Empty;
-                while (startIndex < str.Length && (Char.IsDigit(str[startIndex]) || str[startIndex] == '.' || str[startIndex] == ','))
+                while (startIndex < str.Length && (char.IsDigit(str[startIndex]) || str[startIndex] == '.' || str[startIndex] == ','))
                 {
                     numb += str[startIndex];
                     startIndex++;
@@ -187,7 +193,7 @@ namespace GradientMethods
                     lastIndex = startIndex - 1;
                     return numb;
                 }
-                throw new Exception("Error geting constant!");
+                throw new EquationException("Error geting constant!", "error_geting_constant");
             }
         }
 
@@ -195,7 +201,7 @@ namespace GradientMethods
         {
             if (operands.Count < 1)
             {
-                throw new Exception("Calculation error!!!");
+                throw new EquationException("Calculation error!!!", "calculation_error");
             }
             char unary_op;
             if (this.isUnary(operation, out unary_op))
@@ -308,7 +314,7 @@ namespace GradientMethods
 
                 if (openBracketsAmount == 0)
                 {
-                    throw new Exception("Error!!! Braket(s) missing!");
+                    throw new EquationException("Error!!! Braket(s) missing!", "error_braket_missing");
                 }
 
                 if (startFunc == "|")
@@ -474,14 +480,19 @@ namespace GradientMethods
 
         private string Normalyze(string eq)
         {
+            if (string.IsNullOrEmpty(eq)) 
+            {
+                throw new EquationException("Equation is empthy!", "equation_is_empthy");
+            }
+
             if (new Regex(@"\p{IsCyrillic}").IsMatch(eq))
             {
-                throw new Exception("Equation is not valid! It contains cyrillic symbols which are not allowed!");
+                throw new EquationException("Equation is not valid! It contains not allowed cyrillic symbols!", "equation_not_valid_it_contains_not_allowed_cyrillic_symbols");
             }
 
             if (eq.Count(e => e == '(') != eq.Count(e => e == ')'))
             {
-                throw new Exception($"Equation is not valid! Amounts of ')' and '(' are not equal!");
+                throw new EquationException($"Equation is not valid! Amounts of ')' and '(' are not equal!", "equation_not_valid_amounts_of_)_and_(_are_not_equal");
             }
 
             eq = eq.ToLower();
@@ -496,13 +507,13 @@ namespace GradientMethods
                 {
                     if (eq[i] == 'x')
                     {
-                        if (Char.IsNumber(eq[i + 1]))
+                        if (char.IsNumber(eq[i + 1]))
                         {
                             vars.Add(eq[i + 1]);
                         }
                         else
                         {
-                            throw new Exception("Equation is not valid! It has to contains variables matching pattern 'X{number}'");
+                            throw new EquationException("Equation is not valid! It has to contains variables matching pattern 'X(number=0..9)'", "equation_not_valid_it_has_to_contains_variables_matching_pattern_X_(_number_0__9_)_");
                         }
                     }
                 }

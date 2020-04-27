@@ -1,0 +1,40 @@
+﻿@model EquationRequest;
+@inject IHtmlLocalizer<SharedResource> localizer
+
+<form asp-controller="Methods" asp-action="@ViewBag.ActionName" method="post">
+    <div>
+        <div class="invalid-feedback" asp-validation-summary="ModelOnly"></div>
+
+        <div>
+            <label asp-for="Equation"></label><br />
+            <input asp-for="Equation" id="gradientMethod_equation_input_id" oninput="" />
+            <span style="color:darkred" asp-validation-for="Equation"></span>
+        </div>
+
+        <div>
+            <label asp-for="Accuracy"></label><br />
+            <input type="number" placeholder="0,0001" step="any" asp-for="Accuracy" />
+            <span style="color:darkred" asp-validation-for="Accuracy"></span>
+        </div>
+
+        <div id="values_of_variables_list_id">
+            @if (ViewBag.InputedValuesOfvariables != null)
+            {
+                foreach (var v in (ViewBag.InputedValuesOfvariables as Dictionary<char, int>))
+                {
+                    <div id="variable_element_id_@(v.Key)">
+                        <label>x@(v.Value) :</label><br />
+                        <input type="number" asp-for="ValuesOfVariables[v.Key]" required/>
+                        <span style="color:darkred" asp-validation-for="ValuesOfVariables[v.Key]"></span>
+                    </div>
+                }
+            }
+
+        </div>
+
+    </div>
+
+
+    <button class="btn btn-success" type="submit">Calculate</button>
+
+</form>

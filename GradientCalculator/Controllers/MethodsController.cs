@@ -21,7 +21,8 @@ namespace GradientCalculator.Controllers
 
 
         [HttpPost]
-        public IActionResult GradientDescend(EquationRequest req)
+        [ValidateAntiForgeryToken]
+        public IActionResult GradientDescend (EquationRequest req)
         {
             ViewBag.InputedValuesOfvariables = Equation.VarsConvertList.Where(v => req.ValuesOfVariables.Keys.Contains(v.Value)).ToDictionary(k => k.Value, v => v.Key);
 
@@ -42,6 +43,7 @@ namespace GradientCalculator.Controllers
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Newton (EquationRequest req)
         {
             ViewBag.InputedValuesOfvariables = Equation.VarsConvertList.Where(v => req.ValuesOfVariables.Keys.Contains(v.Value)).ToDictionary(k => k.Value, v => v.Key);

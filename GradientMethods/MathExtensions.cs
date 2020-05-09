@@ -3,14 +3,14 @@ namespace GradientMethods
 {
     public static class MathExtension
     {
-        public static double Acot(double val)
+        public static double Acot(double value)
         {
-            return (Math.PI / 2) - Math.Atan(val);
+            return (Math.PI / 2) - Math.Atan(value);
         }
 
-        public static double Cot(double val)
+        public static double Cot(double value)
         {
-            return 1 / Math.Tan(val);
+            return 1 / Math.Tan(value);
         }
     }
 }

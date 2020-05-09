@@ -6,26 +6,27 @@ namespace GradientMethods
 {
     public partial class GradientMethod
     {
-        static public List<double> Newton(Equation F, Dictionary<char, double> X, double eps, ref int iterAmount)
+
+        static public List<double> Newton(Equation function, Dictionary<char, double> valuesOfVariables, double accuracy, ref int iterationsAmount)
         {
-            Dictionary<char, double> G = Gradient(F, X);
+            Dictionary<char, double> G = Gradient(function, valuesOfVariables);
             double S = 0.0d;
 
-            for (int i = 0; i < X.Count; i++)
+            for (int i = 0; i < valuesOfVariables.Count; i++)
             {
                 S += Math.Pow(G[Equation.VarsConvertList[i]], 2);
             }
-            if (Math.Abs(Math.Sqrt(S)) <= eps)
+            if (Math.Abs(Math.Sqrt(S)) <= accuracy)
             {
-                return X.Values.ToList();
+                return valuesOfVariables.Values.ToList();
             }
-            iterAmount++;
+            iterationsAmount++;
             Dictionary<char, double> M1 = new Dictionary<char, double>();
-            for (int i = 0; i < X.Count; i++)
+            for (int i = 0; i < valuesOfVariables.Count; i++)
             {
-                M1.Add(Equation.VarsConvertList[i], X[Equation.VarsConvertList[i]] - MultVec(GetInvertibleMatrix(Hessian(F, X))[i], G.Values.ToList()));
+                M1.Add(Equation.VarsConvertList[i], valuesOfVariables[Equation.VarsConvertList[i]] - MultiplyVectors(GetInvertibleMatrix(Hessian(function, valuesOfVariables))[i], G.Values.ToList()));
             }
-            return Newton(F, M1, eps, ref iterAmount);
+            return Newton(function, M1, accuracy, ref iterationsAmount);
         }
     }
 }

@@ -22,13 +22,16 @@ namespace GradientMethods
             this.Index = res;
         }
 
-
         public override string ToString()
         {
             return $"{this.Name}{this.Index}".ToLower();
         }
     }
 
+
+    /// <summary>
+    /// * write legend!!!!
+    /// </summary>
     public sealed class Equation
     {
         public double this[IEnumerable<KeyValuePair<char, double>> valuesOfVariables]
@@ -42,13 +45,13 @@ namespace GradientMethods
 
         private string equation;
         private Dictionary<char, double> valuesOfVariables;
-        private List<int> vars = new List<int>();
+        private List<int> variablesIndexes = new List<int>();
 
         public List<VarValue> Variables
         {
             get
             {
-                return this.vars.Select(v => new VarValue($"x{v}")).ToList();
+                return this.variablesIndexes.Select(v => new VarValue($"x{v}")).ToList();
             }
         }
 
@@ -57,60 +60,60 @@ namespace GradientMethods
             this.equation = this.Normalyze(equation);
         }
 
-        private double Calculate(Dictionary<char, double> valuesOfVariables)
+        private double Calculate(Dictionary<char, double> _valuesOfVariables)
         {
-            this.valuesOfVariables = valuesOfVariables;
+            this.valuesOfVariables = _valuesOfVariables;
 
-            if (valuesOfVariables.Count != this.vars.Count)
+            if (_valuesOfVariables.Count != this.variablesIndexes.Count)
             {
                 throw new EquationException("Incorect input list of variable values!", "incorect_input_list_of_variable_values");
             }
 
             foreach (var el in this.Constants)
             {
-                valuesOfVariables.Add(el.Key, el.Value);
+                _valuesOfVariables.Add(el.Key, el.Value);
             }
 
-            string Equa = this.equation;
-            while (this.ContainsFunctions(Equa))
+            string tempEquation = this.equation;
+            while (this.ContainsFunctions(tempEquation))
             {
-                Equa = this.CalcFunctions(Equa);
+                tempEquation = this.CalcFunctions(tempEquation);
             }
 
             bool may_unary = true;
             Stack<string> operands = new Stack<string>();
             Stack<char> operations = new Stack<char>();
 
-            for (int i = 0; i < Equa.Length; i++)
+            for (int i = 0; i < tempEquation.Length; i++)
             {
-                if (Equa[i] == '(')
+                if (tempEquation[i] == '(')
                 {
                     operations.Push('(');
                     may_unary = true;
                 }
-                else if (Equa[i] == ')')
+                else if (tempEquation[i] == ')')
                 {
                     while (operations.First() != '(')
                     {
-                        this.CalcProcessIteration(ref operands, valuesOfVariables, operations.First());
+                        this.CalcProcessIteration(ref operands, _valuesOfVariables, operations.First());
                         operations.Pop();
                     }
 
                     operations.Pop();
                     may_unary = false;
                 }
-                else if (this.isOperator(Equa[i]))
+                else if (this.isOperator(tempEquation[i]))
                 {
-                    char curop = Equa[i];
-                    if (may_unary && (i == 0 || !char.IsLetterOrDigit(Equa[i - 1])))
+                    char curop = tempEquation[i];
+                    if (may_unary && (i == 0 || !char.IsLetterOrDigit(tempEquation[i - 1])))
                     {
                         curop = (char)(-curop);
                     }
 
-                    while (operations.Any() && (!this.isRightAssoc(curop) && this.GetPriority(operations.First()) >= this.GetPriority(curop) ||
-                                                this.isRightAssoc(curop) && this.GetPriority(operations.First()) > this.GetPriority(curop)))
+                    while (operations.Any() && (!this.isRightAssociative(curop) && this.GetPriority(operations.First()) >= this.GetPriority(curop) ||
+                                                this.isRightAssociative(curop) && this.GetPriority(operations.First()) > this.GetPriority(curop)))
                     {
-                        this.CalcProcessIteration(ref operands, valuesOfVariables, operations.First());
+                        this.CalcProcessIteration(ref operands, _valuesOfVariables, operations.First());
                         operations.Pop();
                     }
                     operations.Push(curop);
@@ -120,14 +123,14 @@ namespace GradientMethods
                 {
                     string operand = string.Empty;
 
-                    if (char.IsLetter(Equa[i]))
+                    if (char.IsLetter(tempEquation[i]))
                     {
-                        operand = Equa[i].ToString();
-                        operands.Push(valuesOfVariables[operand[0]].ToString());
+                        operand = tempEquation[i].ToString();
+                        operands.Push(_valuesOfVariables[operand[0]].ToString());
                     }
-                    else if (char.IsDigit(Equa[i]))
+                    else if (char.IsDigit(tempEquation[i]))
                     {
-                        operand = this.GetConstant(Equa, out i, i);
+                        operand = this.GetConstant(tempEquation, out i, i);
                         operands.Push(operand);
                     }
                     may_unary = false;
@@ -136,11 +139,11 @@ namespace GradientMethods
 
             while (operations.Any())
             {
-                this.CalcProcessIteration(ref operands, valuesOfVariables, operations.First());
+                this.CalcProcessIteration(ref operands, _valuesOfVariables, operations.First());
                 operations.Pop();
             }
 
-            if (operands.Count != 1) 
+            if (operands.Count != 1)
             {
                 throw new EquationException("Equation is not valid!", "equation_is_not_valid");
             }
@@ -152,7 +155,7 @@ namespace GradientMethods
             return res;
         }
 
-        private bool isRightAssoc(char op)
+        private bool isRightAssociative(char op)
         {
             if (op == '^' || this.isUnary(op, out _))
             {
@@ -163,7 +166,6 @@ namespace GradientMethods
 
         private bool isUnary(char op, out char newOp)
         {
-
             if ((char)(-op) == '+' || (char)(-op) == '-')
             {
                 newOp = (char)(-op);
@@ -182,7 +184,9 @@ namespace GradientMethods
             else
             {
                 string numb = string.Empty;
-                while (startIndex < str.Length && (char.IsDigit(str[startIndex]) || str[startIndex] == '.' || str[startIndex] == ','))
+                while (startIndex < str.Length && (char.IsDigit(str[startIndex])
+                                                    || str[startIndex] == '.'
+                                                    || str[startIndex] == ','))
                 {
                     numb += str[startIndex];
                     startIndex++;
@@ -289,17 +293,17 @@ namespace GradientMethods
             return false;
         }
 
-        delegate double MathFunc(double par);
+        private delegate double MathFunction(double parametr);
 
         private string CalcFunctions(string equationPart)
         {
-            string GetPart(string startFunc, MathFunc mathFunc)
+            string GetPart(string mathFunctionName, MathFunction mathFunction)
             {
-                int startFuncIndex = equationPart.IndexOf(startFunc, StringComparison.InvariantCultureIgnoreCase);
+                int startFuncIndex = equationPart.IndexOf(mathFunctionName, StringComparison.InvariantCultureIgnoreCase);
 
                 int openingBracketIndex;
 
-                if (startFunc == "|")
+                if (mathFunctionName == "|")
                 {
                     openingBracketIndex = startFuncIndex + 1;
                 }
@@ -317,7 +321,7 @@ namespace GradientMethods
                     throw new EquationException("Error!!! Braket(s) missing!", "error_braket_missing");
                 }
 
-                if (startFunc == "|")
+                if (mathFunctionName == "|")
                 {
                     for (int i = openingBracketIndex; i < equationPart.Length; i++)
                     {
@@ -348,19 +352,19 @@ namespace GradientMethods
                     }
                 }
 
-                string newEq = equationPart.Substring(openingBracketIndex, closedBracketIndex - openingBracketIndex + 1);
+                string newEquation = equationPart.Substring(openingBracketIndex, closedBracketIndex - openingBracketIndex + 1);
 
                 foreach (var vcl in VarsConvertList)
                 {
-                    if (newEq.Contains(vcl.Value.ToString()))
+                    if (newEquation.Contains(vcl.Value.ToString()))
                     {
-                        newEq = newEq.Replace(vcl.Value.ToString(), $"x{vcl.Key}");
+                        newEquation = newEquation.Replace(vcl.Value.ToString(), $"x{vcl.Key}");
                     }
                 }
 
                 string partToReplace;
 
-                if (startFunc == "|")
+                if (mathFunctionName == "|")
                 {
                     partToReplace = equationPart.Substring(startFuncIndex, closedBracketIndex - startFuncIndex + 2);
                 }
@@ -369,19 +373,19 @@ namespace GradientMethods
                     partToReplace = equationPart.Substring(startFuncIndex, closedBracketIndex - startFuncIndex + 1);
                 }
 
-                Equation funcCalcEq = new Equation(newEq);
+                Equation funcCalcEq = new Equation(newEquation);
 
                 Dictionary<char, double> valOfVars = new Dictionary<char, double>();
 
-                if (funcCalcEq.vars.Count > 0)
+                if (funcCalcEq.variablesIndexes.Count > 0)
                 {
-                    foreach (var v in funcCalcEq.vars)
+                    foreach (var v in funcCalcEq.variablesIndexes)
                     {
                         valOfVars.Add(this.valuesOfVariables.First(vov => vov.Key == VarsConvertList[v]).Key, this.valuesOfVariables.First(vov => vov.Key == VarsConvertList[v]).Value);
                     }
                 }
 
-                double result = mathFunc(funcCalcEq.Calculate(valOfVars));
+                double result = mathFunction(funcCalcEq.Calculate(valOfVars));
 
                 equationPart = equationPart.Replace(partToReplace, result.ToString().Replace(',', '.'));
 
@@ -471,16 +475,26 @@ namespace GradientMethods
 
         private bool isOperator(char o)
         {
-            if (o == '+' || o == '-' || o == '*' || o == '/' || o == '÷' || o == '^')
+            if (o == '+' 
+             || o == '-' 
+             || o == '*'
+             || o == '/' 
+             || o == '÷' 
+             || o == '^')
             {
                 return true;
             }
             return false;
         }
 
+        /// <summary>
+        /// Removes off white spaces, checks whether input string is validate otherwise throws exception, and replace all variables like x{number=0..9} to one char symbol
+        /// </summary>
+        /// <param name="eq"></param>
+        /// <returns></returns>
         private string Normalyze(string eq)
         {
-            if (string.IsNullOrEmpty(eq)) 
+            if (string.IsNullOrEmpty(eq))
             {
                 throw new EquationException("Equation is empthy!", "equation_is_empthy");
             }
@@ -520,9 +534,9 @@ namespace GradientMethods
 
                 this.equationWithoutNormalizatoin = eq;
 
-                this.vars = vars.Distinct().Select(v => int.TryParse(v.ToString(), out int res) ? res : -1).ToList();
+                this.variablesIndexes = vars.Distinct().Select(v => int.TryParse(v.ToString(), out int res) ? res : -1).ToList();
 
-                if (this.vars.Count() > 0)
+                if (this.variablesIndexes.Count() > 0)
                 {
                     int ind = 0;
                     foreach (var v in this.Variables)
@@ -543,27 +557,34 @@ namespace GradientMethods
         private string equationWithoutNormalizatoin;
 
         /// <summary>
-        /// Returns normalyzed equation string.
+        /// Returns equation string.
         /// </summary>
         public override string ToString()
         {
             return this.equationWithoutNormalizatoin;
         }
 
+        /// <summary>
+        /// Convert varible of equation x{number=0..9} to one symbol (it is for comfort of calculation)
+        /// </summary>
         public static readonly Dictionary<int, char> VarsConvertList = new Dictionary<int, char>
-            {
-                {0, 'm'},
-                {1, 'b'},
-                {2, 'q'},
-                {3, 'd'},
-                {4, 'f'},
-                {5, 'u'},
-                {6, 'v'},
-                {7, 'j'},
-                {8, 'y'},
-                {9, 'z'}
-            };
+        { 
+             {0, 'm'},
+             {1, 'b'},
+             {2, 'q'},
+             {3, 'd'},
+             {4, 'f'},
+             {5, 'u'},
+             {6, 'v'},
+             {7, 'j'},
+             {8, 'y'},
+             {9, 'z'}
+        };
 
+
+        /// <summary>
+        /// base math constants
+        /// </summary>
         private readonly Dictionary<char, double> Constants = new Dictionary<char, double>
         {
             {'π', Math.PI},

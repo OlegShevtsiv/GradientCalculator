@@ -39,7 +39,7 @@ namespace GradientMethods
 
                     Console.WriteLine("Gradient Descent Method: ");
                     iterAmount = 0;
-                    List<double> GDResult = GradientMethod.GradientDescent(eq, inputVars, eps, ref iterAmount);
+                    List<double> GDResult = GradientMethod.GradientDescent(eq, inputVars, eps, out iterAmount);
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.DarkRed;

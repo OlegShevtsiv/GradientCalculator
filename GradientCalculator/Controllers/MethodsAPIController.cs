@@ -28,7 +28,7 @@ namespace GradientCalculator.Controllers
             try
             {
                 Equation equation = new Equation(eq);
-                if (equation.Variables.Count == 0) 
+                if (equation.Variables.Count == 0)
                 {
                     return new WebScriptResponseResult(null, this._localizer["equation_doesnt_contain_any_variables"]);
                 }
@@ -38,7 +38,7 @@ namespace GradientCalculator.Controllers
             }
             catch (Exception exc)
             {
-                return new WebScriptResponseResult(null, exc.Message);
+                return new WebScriptResponseResult(null, exc?.Message);
             }
         }
     }

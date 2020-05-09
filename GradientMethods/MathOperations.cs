@@ -6,61 +6,74 @@ namespace GradientMethods
 {
     public partial class GradientMethod
     {
-        static double df(Equation F, Dictionary<char, double> X, char i) // method of finding a partial derivative
+        /// <summary>
+        /// Method of finding a partial derivative
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="valuesOfVariables"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        static double df(Equation function, Dictionary<char, double> valuesOfVariables, char index)
         {
-            if (X == null)
+            if (valuesOfVariables == null)
             {
                 throw new Exception("Matrix is empty!!!");
             }
             const double step = 0.000001;
-            if (!X.ContainsKey(i))
+            if (!valuesOfVariables.ContainsKey(index))
             {
                 throw new KeyNotFoundException();
             }
 
-            Dictionary<char, double> X_h = new Dictionary<char, double>(X);
+            Dictionary<char, double> X_h = new Dictionary<char, double>(valuesOfVariables);
 
-            X_h[i] += step;
+            X_h[index] += step;
 
-            return (F[X_h] - F[X]) / step;
+            return (function[X_h] - function[valuesOfVariables]) / step;
         }
 
-        static Dictionary<char, double> Gradient(Equation F, Dictionary<char, double> X) // Jacobi matrix
+        /// <summary>
+        /// Jacobi matrix
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="valuesOfVariables"></param>
+        /// <returns></returns>
+        static Dictionary<char, double> Gradient(Equation function, Dictionary<char, double> valuesOfVariables)
         {
-            if (X == null)
+            if (valuesOfVariables == null)
             {
                 throw new Exception("Matrix is empty!!!");
             }
 
-            Dictionary<char, double> grad = new Dictionary<char, double>();
+            Dictionary<char, double> gradient = new Dictionary<char, double>();
 
 
-            foreach (var x in X)
+            foreach (var x in valuesOfVariables)
             {
-                grad.Add(x.Key, df(F, X, x.Key));
+                gradient.Add(x.Key, df(function, valuesOfVariables, x.Key));
             }
 
-            return grad;
+            return gradient;
         }
 
-        static List<List<double>> GetInvertibleMatrix(List<List<double>> A)// get invertible matrix 
+        static List<List<double>> GetInvertibleMatrix(List<List<double>> matrix)
         {
-            if (A == null)
+            if (matrix == null)
             {
                 throw new Exception("Matrix is empty!!!");
             }
-            if (A.Count != A[0].Count)
+            if (matrix.Count != matrix[0].Count)
             {
                 throw new Exception("Matrix is not square!!!");
             }
-            if (A.Count == 1)
+            if (matrix.Count == 1)
             {
-                return new List<List<double>> { new List<double> { 1.0 / A[0][0] } };
+                return new List<List<double>> { new List<double> { 1.0 / matrix[0][0] } };
             }
 
-            int n = A.Count;
-            List<double> Koef = GetKoef(A);
-            List<List<double>> E = new List<List<double>>(UnitMatrix(n));
+            int n = matrix.Count;
+            List<double> Koef = GetKoef(matrix);
+            List<List<double>> E = new List<List<double>>(GetUnitMatrix(n));
             List<List<double>> OA = new List<List<double>>();
             for (int i = 0; i < n; i++)
             {
@@ -71,7 +84,7 @@ namespace GradientMethods
                 }
             }
 
-            List<List<double>> A1 = new List<List<double>>(A);
+            List<List<double>> A1 = new List<List<double>>(matrix);
 
             for (int i = n - 2; i >= 0; i--)
             {
@@ -89,10 +102,10 @@ namespace GradientMethods
                         }
                     }
                 }
-                A1 = MultMatrixes(A1, A);
+                A1 = MultiplyMatrixes(A1, matrix);
             }
 
-            List<List<double>> CheckResultMutrix = MultMatrixes(OA, A);
+            List<List<double>> CheckResultMutrix = MultiplyMatrixes(OA, matrix);
             bool isCorrect = true;
             for (int i = 0; i < n; i++)
             {
@@ -122,7 +135,12 @@ namespace GradientMethods
             return OA;
         }
 
-        static List<List<double>> UnitMatrix(int size)
+        /// <summary>
+        /// Gets matrix with all zero elements except diagonal, which initialized of '1'
+        /// </summary>
+        /// <param name="size"></param>
+        /// <returns></returns>
+        static List<List<double>> GetUnitMatrix(int size)
         {
             List<List<double>> unit_matrix = new List<List<double>>();
             for (int i = 0; i < size; i++)
@@ -132,18 +150,24 @@ namespace GradientMethods
             return unit_matrix;
         }
 
-        static List<double> GetKoef(List<List<double>> A) // coefficients of the characteristic polynomial
+
+        /// <summary>
+        /// Coefficients of the characteristic polynomial
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        static List<double> GetKoef(List<List<double>> matrix)
         {
-            if (A == null)
+            if (matrix == null)
             {
                 throw new Exception("Matrix is empty!!!");
             }
-            if (A.Count != A[0].Count)
+            if (matrix.Count != matrix[0].Count)
             {
                 throw new Exception("Matrix is not square!!!");
             }
-            int n = A.Count;
-            List<List<double>> AA = new List<List<double>>(A);
+            int n = matrix.Count;
+            List<List<double>> AA = new List<List<double>>(matrix);
             double S;
             List<double> Sk = new List<double>();
             for (int k = 0; k < n; k++)
@@ -151,7 +175,7 @@ namespace GradientMethods
                 S = 0.0d;
                 if (k > 0)
                 {
-                    AA = MultMatrixes(AA, A);
+                    AA = MultiplyMatrixes(AA, matrix);
                 }
                 for (int i = 0; i < n; i++)
                 {
@@ -173,30 +197,30 @@ namespace GradientMethods
             return Koef;
         }
 
-        static List<List<double>> MultMatrixes(List<List<double>> A, List<List<double>> B)
+        static List<List<double>> MultiplyMatrixes(List<List<double>> matrix_A, List<List<double>> matrix_B)
         {
-            if (A == null)
+            if (matrix_A == null)
             {
                 throw new Exception("Matrix is empty!!!");
             }
-            if (A.Count != A[0].Count)
+            if (matrix_A.Count != matrix_A[0].Count)
             {
                 throw new Exception("Matrix is not square!!!");
             }
-            if (B == null)
+            if (matrix_B == null)
             {
                 throw new Exception("Matrix is empty!!!");
             }
-            if (B.Count != B[0].Count)
+            if (matrix_B.Count != matrix_B[0].Count)
             {
                 throw new Exception("Matrix is not square!!!");
             }
-            if (A[0].Count != B.Count)
+            if (matrix_A[0].Count != matrix_B.Count)
             {
                 throw new Exception("Impossible to multply two matrixes!!!");
             }
             double S;
-            int n = A.Count;
+            int n = matrix_A.Count;
             List<List<double>> Result = new List<List<double>>();
             for (int i = 0; i < n; i++)
             {
@@ -206,7 +230,7 @@ namespace GradientMethods
                     S = 0.0d;
                     for (int k = 0; k < n; k++)
                     {
-                        S += A[i][k] * B[k][j];
+                        S += matrix_A[i][k] * matrix_B[k][j];
                     }
                     Result[i].Add(S);
                 }
@@ -214,78 +238,93 @@ namespace GradientMethods
             return Result;
         }
 
-        static double MultVec(List<double> A, List<double> B)
+
+
+        static double MultiplyVectors(List<double> vector_A, List<double> vector_B)
         {
-            if (A == null || B == null)
+            if (vector_A == null || vector_B == null)
             {
                 throw new Exception("Vector is empty!!!");
             }
-            if (A.Count != B.Count)
+            if (vector_A.Count != vector_B.Count)
             {
                 throw new Exception("Range of vectors are not equal!!!");
             }
-            int n = A.Count;
+            int n = vector_A.Count;
             double Sum = 0.0d;
             for (int i = 0; i < n; i++)
             {
-                Sum += A[i] * B[i];
+                Sum += vector_A[i] * vector_B[i];
             }
             return Sum;
         }
 
-        static List<double> AddVec(List<double> X1, List<double> X2)
+        static List<double> SumVectors(List<double> vactor_A, List<double> vector_B)
         {
-            if (X1 == null || X2 == null)
+            if (vactor_A == null || vector_B == null)
             {
                 throw new Exception("Vector is empty!!!");
             }
-            if (X1.Count != X2.Count)
+            if (vactor_A.Count != vector_B.Count)
             {
                 throw new Exception("Range of vectors are not equal!!!");
             }
-            List<double> A = new List<double>();
-            for (int i = 0; i < X1.Count; i++)
+            List<double> result = new List<double>();
+            for (int i = 0; i < vactor_A.Count; i++)
             {
-                A.Add(X1[i] + X2[i]);
+                result.Add(vactor_A[i] + vector_B[i]);
             }
-            return A;
+            return result;
         }
 
-        static List<double> SubVec(List<double> X1, List<double> X2)
+
+        static List<double> SubtractVectors(List<double> vactor_A, List<double> vector_B)
         {
-            if (X1 == null || X2 == null)
+            if (vactor_A == null || vector_B == null)
             {
                 throw new Exception("Vector is empty!!!");
             }
-            if (X1.Count != X2.Count)
+            if (vactor_A.Count != vector_B.Count)
             {
                 throw new Exception("Range of vectors are not equal!!!");
             }
-            List<double> S = new List<double>();
-            for (int i = 0; i < X1.Count; i++)
+            List<double> result = new List<double>();
+            for (int i = 0; i < vactor_A.Count; i++)
             {
-                S.Add(X1[i] - X2[i]);
+                result.Add(vactor_A[i] - vector_B[i]);
             }
-            return S;
+            return result;
         }
 
-        static List<double> MultVecOnVal(List<double> X, double val) // multiply vector on some value
+        /// <summary>
+        /// Multiply vector on some number
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="number"></param>
+        /// <returns></returns>
+        static List<double> MultiplyVectorOnValue(List<double> vector, double number) // 
         {
-            if (X == null)
+            if (vector == null)
             {
                 throw new Exception("Vector is empty!!!");
             }
-            for (int i = 0; i < X.Count; i++)
+            for (int i = 0; i < vector.Count; i++)
             {
-                X[i] *= val;
+                vector[i] *= number;
             }
-            return X;
+            return vector;
         }
 
-        static List<double> UnitVector(int size, int index)
+        /// <summary>
+        /// Gets vector with all zero elements except element on specified index
+        /// </summary>
+        /// <param name="sizeOfVector"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        static List<double> UnitVector(int sizeOfVector, int index)
         {
             List<double> unit_vector = new List<double>();
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < sizeOfVector; i++)
             {
                 if (i == index)
                 {
@@ -299,60 +338,65 @@ namespace GradientMethods
             return unit_vector;
         }
 
-
-        static List<List<double>> Hessian(Equation F, Dictionary<char, double> X) // matrix of Hesse
+        /// <summary>
+        /// matrix of Hesse
+        /// </summary>
+        /// <param name="function"></param>
+        /// <param name="valuesOfVariables"></param>
+        /// <returns></returns>
+        static List<List<double>> Hessian(Equation function, Dictionary<char, double> valuesOfVariables) 
         {
-            if (F == null)
+            if (function == null)
             {
                 throw new Exception("Unknown function!!!");
             }
-            if (X == null)
+            if (valuesOfVariables == null)
             {
                 throw new Exception("Vector is empty!!!");
             }
-            List<List<double>> hessian = new List<List<double>>(X.Count);
-            for (int i = 0; i < X.Count; i++)
+            List<List<double>> hessian = new List<List<double>>(valuesOfVariables.Count);
+            for (int i = 0; i < valuesOfVariables.Count; i++)
             {
-                hessian.Add(new List<double>(X.Count));
-                for (int j = 0; j < X.Count; j++)
+                hessian.Add(new List<double>(valuesOfVariables.Count));
+                for (int j = 0; j < valuesOfVariables.Count; j++)
                 {
                     hessian[i].Add(0.0d);
                 }
             }
 
             double step = 0.00001;
-            double curFValue = F[X];
+            double curFValue = function[valuesOfVariables];
 
-            List<double> fPlus = new List<double>(X.Count);
-            List<double> fMinus = new List<double>(X.Count);
+            List<double> fPlus = new List<double>(valuesOfVariables.Count);
+            List<double> fMinus = new List<double>(valuesOfVariables.Count);
 
             List<double> tempList;
             int index = 0;
 
-            for (int i = 0; i < X.Count; i++)
+            for (int i = 0; i < valuesOfVariables.Count; i++)
             {
                 index = 0;
-                tempList = AddVec(X.Values.ToList(), MultVecOnVal(UnitVector(X.Count, i), step));
-                fPlus.Add(F[X.Select(x => new KeyValuePair<char, double>(key: x.Key, value: tempList[index++]))]);
+                tempList = SumVectors(valuesOfVariables.Values.ToList(), MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count, i), step));
+                fPlus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<char, double>(key: x.Key, value: tempList[index++]))]);
 
                 index = 0;
-                tempList = SubVec(X.Values.ToList(), MultVecOnVal(UnitVector(X.Count, i), step));
-                fMinus.Add(F[X.Select(x => new KeyValuePair<char, double>(key: x.Key, value: tempList[index++]))]);
+                tempList = SubtractVectors(valuesOfVariables.Values.ToList(), MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count, i), step));
+                fMinus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<char, double>(key: x.Key, value: tempList[index++]))]);
                 hessian[i][i] = (fPlus[i] - 2 * curFValue + fMinus[i]) / (step * step);
             }
 
-            for (int i = 0; i < X.Count; i++)
+            for (int i = 0; i < valuesOfVariables.Count; i++)
             {
-                for (int j = i + 1; j < X.Count; j++)
+                for (int j = i + 1; j < valuesOfVariables.Count; j++)
                 {
                     index = 0;
-                    tempList = AddVec(X.Values.ToList(), MultVecOnVal(AddVec(UnitVector(X.Count, i), UnitVector(X.Count, j)), step));
-                    double x = F[X.Select(x1 => new KeyValuePair<char, double>(key: x1.Key, value: tempList[index++]))];
+                    tempList = SumVectors(valuesOfVariables.Values.ToList(), MultiplyVectorOnValue(SumVectors(UnitVector(valuesOfVariables.Count, i), UnitVector(valuesOfVariables.Count, j)), step));
+                    double x = function[valuesOfVariables.Select(x1 => new KeyValuePair<char, double>(key: x1.Key, value: tempList[index++]))];
                     hessian[i][j] = (x - fPlus[i] - fPlus[j] + curFValue) / (step * step);
                 }
             }
 
-            for (int i = 0; i < X.Count; i++)
+            for (int i = 0; i < valuesOfVariables.Count; i++)
             {
                 for (int j = 0; j < i; j++)
                 {

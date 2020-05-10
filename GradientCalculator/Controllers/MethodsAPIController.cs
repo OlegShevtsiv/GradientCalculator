@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using GradientCalculator.Middlewares.Filters;
 using GradientCalculator.Models.Response;
 using GradientMethods;
 using GradientMethods.ExceptionResult;
@@ -14,31 +17,31 @@ namespace GradientCalculator.Controllers
 {
     [Route("api/Methods/[action]")]
     [ApiController]
+    //[ServiceFilter(typeof(LanguageActionFilter))]
     public class MethodsAPIController : ControllerBase
     {
-        private readonly IStringLocalizer<MethodsAPIController> _localizer;
-        public MethodsAPIController(IStringLocalizer<MethodsAPIController> localizer)
+        private readonly IStringLocalizer<SharedResource> _localizer;
+        public MethodsAPIController(IStringLocalizer<SharedResource> localizer)
         {
             this._localizer = localizer;
         }
 
         [HttpPost]
-        public WebScriptResponseResult GetVariables(string eq) 
+        public WebScriptResponseResult GetVariables(string eq)
         {
             try
             {
                 Equation equation = new Equation(eq);
-                if (equation.Variables.Count == 0)
-                {
-                    return new WebScriptResponseResult(null, this._localizer["equation_doesnt_contain_any_variables"]);
-                }
-                //return new WebScriptResponseResult(equation.Variables.OrderBy(v => v.Index).Select(v => new KeyValuePair<int, char>(v.Index, Equation.VarsConvertList[v.Index])).ToDictionary(k => k.Key, v => v.Value));
 
                 return new WebScriptResponseResult(equation.Variables.OrderBy(v => v.Index).Select(v => new KeyValuePair<int, char>(v.Index, Equation.VarsConvertList[v.Index])).ToList());
             }
+            catch (LocalizedException exc)
+            {
+                return new WebScriptResponseResult(exc.GetLocalizedMessage(Thread.CurrentThread.CurrentUICulture));
+            }
             catch (Exception exc)
             {
-                return new WebScriptResponseResult(null, exc?.Message);
+                return new WebScriptResponseResult(_localizer["equation_is_not_valid"]);
             }
         }
     }

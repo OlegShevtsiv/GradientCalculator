@@ -10,7 +10,7 @@ namespace GradientCalculator.Models.Request
 {
     public class EquationRequest
     {
-        [Required(ErrorMessage = "this_is_required_field")]
+        [Required]
         [Display(Name = "Equation")]
         //[Equation(ErrorMessage = "equation_is_not_valid")]
         public string Equation { get; set; }

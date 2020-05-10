@@ -7,7 +7,6 @@ using System.Threading;
 using GradientCalculator.Configs;
 using GradientCalculator.Models;
 using GradientCalculator.ViewModels;
-using ImageController;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GradientCalculator.Controllers
@@ -21,12 +20,10 @@ namespace GradientCalculator.Controllers
 
             if (model.newCulture.ToLower().Equals("uk"))
             {
-                Thread.CurrentThread.CurrentCulture = new CultureInfo(co.DefaultLang_UA);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(co.DefaultLang_UA);
             }
             else if (model.newCulture.ToLower().Equals("en"))
             {
-                Thread.CurrentThread.CurrentCulture = new CultureInfo(co.Lang_EN);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(co.Lang_EN);
             }
 

@@ -15,7 +15,7 @@ namespace GradientMethods
         {
             if (value.Length != 2 || !int.TryParse(value[1].ToString(), out var res))
             {
-                throw new EquationException("Error creating value of variable!", "error_creating_value_of_variable");
+                throw new LocalizedException("error_creating_value_of_variable");
             }
 
             this.Name = value[0];
@@ -66,7 +66,7 @@ namespace GradientMethods
 
             if (_valuesOfVariables.Count != this.variablesIndexes.Count)
             {
-                throw new EquationException("Incorect input list of variable values!", "incorect_input_list_of_variable_values");
+                throw new LocalizedException("incorect_input_list_of_variable_values");
             }
 
             foreach (var el in this.Constants)
@@ -145,7 +145,7 @@ namespace GradientMethods
 
             if (operands.Count != 1)
             {
-                throw new EquationException("Equation is not valid!", "equation_is_not_valid");
+                throw new LocalizedException("equation_is_not_valid");
             }
 
             double res;
@@ -179,7 +179,7 @@ namespace GradientMethods
         {
             if (string.IsNullOrEmpty(str) || !char.IsDigit(str[startIndex]))
             {
-                throw new EquationException("Constant not found!", "constant_not_found");
+                throw new LocalizedException("constant_not_found");
             }
             else
             {
@@ -197,7 +197,7 @@ namespace GradientMethods
                     lastIndex = startIndex - 1;
                     return numb;
                 }
-                throw new EquationException("Error geting constant!", "error_geting_constant");
+                throw new LocalizedException("error_geting_constant");
             }
         }
 
@@ -205,7 +205,7 @@ namespace GradientMethods
         {
             if (operands.Count < 1)
             {
-                throw new EquationException("Calculation error!!!", "calculation_error");
+                throw new LocalizedException("calculation_error");
             }
             char unary_op;
             if (this.isUnary(operation, out unary_op))
@@ -318,7 +318,7 @@ namespace GradientMethods
 
                 if (openBracketsAmount == 0)
                 {
-                    throw new EquationException("Error!!! Braket(s) missing!", "error_braket_missing");
+                    throw new LocalizedException("error_braket_missing");
                 }
 
                 if (mathFunctionName == "|")
@@ -496,17 +496,17 @@ namespace GradientMethods
         {
             if (string.IsNullOrEmpty(eq))
             {
-                throw new EquationException("Equation is empthy!", "equation_is_empthy");
+                throw new LocalizedException("equation_is_empthy");
             }
 
             if (new Regex(@"\p{IsCyrillic}").IsMatch(eq))
             {
-                throw new EquationException("Equation is not valid! It contains not allowed cyrillic symbols!", "equation_not_valid_it_contains_not_allowed_cyrillic_symbols");
+                throw new LocalizedException("equation_not_valid_it_contains_not_allowed_cyrillic_symbols");
             }
 
             if (eq.Count(e => e == '(') != eq.Count(e => e == ')'))
             {
-                throw new EquationException($"Equation is not valid! Amounts of ')' and '(' are not equal!", "equation_not_valid_amounts_of_)_and_(_are_not_equal");
+                throw new LocalizedException("equation_not_valid_amounts_of_)_and_(_are_not_equal");
             }
 
             eq = eq.ToLower();
@@ -527,7 +527,7 @@ namespace GradientMethods
                         }
                         else
                         {
-                            throw new EquationException("Equation is not valid! It has to contains variables matching pattern 'X(number=0..9)'", "equation_not_valid_it_has_to_contains_variables_matching_pattern_X_(_number_0__9_)_");
+                            throw new LocalizedException("equation_not_valid_it_has_to_contains_variables_matching_pattern_X_(_number_0__9_)_");
                         }
                     }
                 }
@@ -567,7 +567,7 @@ namespace GradientMethods
         /// <summary>
         /// Convert varible of equation x{number=0..9} to one symbol (it is for comfort of calculation)
         /// </summary>
-        public static readonly Dictionary<int, char> VarsConvertList = new Dictionary<int, char>
+        public static readonly Dictionary<int, char> VarsConvertList = new Dictionary<int, char>//to incapsulate in future
         { 
              {0, 'm'},
              {1, 'b'},

@@ -25,13 +25,11 @@ namespace GradientCalculator.Middlewares.Filters
             if (context.RouteData.Values.TryGetValue("url", out _) && context.RouteData.Values["action"].ToString().ToLower().Equals("notfoundpage"))
             {
                 _logger.LogInformation($"Unknown request path!");
-                _ = Thread.CurrentThread.CurrentUICulture;
             }
             else if (!context.RouteData.Values.ContainsKey("culture"))
             {
                 _logger.LogInformation($"Setting the default culture");
 
-                Thread.CurrentThread.CurrentCulture = new CultureInfo(co.DefaultLang_UA);
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(co.DefaultLang_UA);
             }
             else

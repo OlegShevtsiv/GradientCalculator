@@ -21,12 +21,12 @@ namespace GradientMethods
                 return valuesOfVariables.Values.ToList();
             }
             iterationsAmount++;
-            Dictionary<char, double> M1 = new Dictionary<char, double>();
+            Dictionary<char, double> nextPoint = new Dictionary<char, double>();
             for (int i = 0; i < valuesOfVariables.Count; i++)
             {
-                M1.Add(Equation.VarsConvertList[i], valuesOfVariables[Equation.VarsConvertList[i]] - MultiplyVectors(GetInvertibleMatrix(Hessian(function, valuesOfVariables))[i], G.Values.ToList()));
+                nextPoint.Add(Equation.VarsConvertList[i], valuesOfVariables[Equation.VarsConvertList[i]] - MultiplyVectors(GetInvertibleMatrix(Hessian(function, valuesOfVariables))[i], G.Values.ToList()));
             }
-            return Newton(function, M1, accuracy, ref iterationsAmount);
+            return Newton(function, nextPoint, accuracy, ref iterationsAmount);
         }
     }
 }

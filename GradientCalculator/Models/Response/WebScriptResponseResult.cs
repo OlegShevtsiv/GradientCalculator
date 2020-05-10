@@ -59,7 +59,7 @@ namespace GradientCalculator.Models.Response
         /// </summary>
         /// <param name="data"></param>
         /// <param name="note"></param>
-        public WebScriptResponseResult(object data, string note = "")
+        public WebScriptResponseResult(object data, string note = null)
         {
              this.Data = data;
              this.Note = note;

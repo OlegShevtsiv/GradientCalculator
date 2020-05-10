@@ -13,7 +13,7 @@ namespace GradientMethods
             double S;
 
             Dictionary<char, double> G = new Dictionary<char, double>();// gradient
-            Dictionary<char, double> M0 = new Dictionary<char, double>(valuesOfVariables.ToDictionary(k => k.Key, v => v.Value));// current point 
+            Dictionary<char, double> M0 = new Dictionary<char, double>(valuesOfVariables);// current point 
             Dictionary<char, double> M1 = new Dictionary<char, double>(); // point to find
 
             double a = 1.0d;

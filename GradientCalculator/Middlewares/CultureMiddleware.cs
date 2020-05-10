@@ -43,13 +43,27 @@ namespace GradientCalculator.Middlewares
                 context.Request.Path.Value == "/")
             {
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(co.DefaultLang_UA);
-                Thread.CurrentThread.CurrentCulture = new CultureInfo(co.DefaultLang_UA);
             }
             else if (context.Request.Path.Value.ToLower().StartsWith("/en"))
             {
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(co.Lang_EN);
-                Thread.CurrentThread.CurrentCulture = new CultureInfo(co.Lang_EN);
             }
+            else 
+            {
+                lang = lang.ToLower();
+                if (lang == "en")
+                {
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(co.Lang_EN);
+                }
+                else if (lang == "uk" || string.IsNullOrEmpty(lang))
+                {
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(co.DefaultLang_UA);
+                }
+            }
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(co.Lang_EN);
+
+
             await _next.Invoke(context);
         }
     }

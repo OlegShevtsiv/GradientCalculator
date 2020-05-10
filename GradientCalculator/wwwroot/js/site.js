@@ -5,7 +5,10 @@ input.oninput = function () {
         function (response) {
             if (response) {
                 if (response.data) {
-                    console.log(response);
+
+                    let errorMessage = document.getElementById('input_equation_error_message');
+                    errorMessage.innerText = '';
+
                     let valOfVarsList = document.getElementById('values_of_variables_list_id');
 
                     let isExist = false;
@@ -32,18 +35,30 @@ input.oninput = function () {
                                     </div>`)
                         }
                     }
-                }
-                else {
-                    let valOfVarsList = document.getElementById('values_of_variables_list_id');
 
-                    if (valOfVarsList && valOfVarsList.childNodes.length > 0)
+                    let formSubmitButton = document.getElementById('equation_form_submit_button_id');
+                    formSubmitButton.setAttribute('type', 'submit');
+                }
+                else if (response.isError)
+                {
+                    let formSubmitButton = document.getElementById('equation_form_submit_button_id');
+                    formSubmitButton.setAttribute('type', 'button');
+
+                    if (response.errorMessage)
                     {
-                        let children = valOfVarsList.childNodes;
-                        for (let i = children.length - 1; i >= 0; i--)
-                        {
-                            children[i].remove();
-                        }
+                        let errorMessage = document.getElementById('input_equation_error_message');
+                        errorMessage.innerText = response.errorMessage;
                     }
+                    //let valOfVarsList = document.getElementById('values_of_variables_list_id');
+
+                    //if (valOfVarsList && valOfVarsList.childNodes.length > 0)
+                    //{
+                    //    let children = valOfVarsList.childNodes;
+                    //    for (let i = children.length - 1; i >= 0; i--)
+                    //    {
+                    //        children[i].remove();
+                    //    }
+                    //}
                 }
             }
      });

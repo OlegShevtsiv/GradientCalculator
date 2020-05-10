@@ -123,12 +123,6 @@
   <data name="Accuracy" xml:space="preserve">
     <value>Accuracy</value>
   </data>
-  <data name="calculation_error" xml:space="preserve">
-    <value>Сalculation error!</value>
-  </data>
-  <data name="constant_not_found" xml:space="preserve">
-    <value>Сonstant not found!</value>
-  </data>
   <data name="cratedBy_footer" xml:space="preserve">
     <value>created by Oleg Shevtsiv</value>
   </data>
@@ -138,32 +132,11 @@
   <data name="Equation" xml:space="preserve">
     <value>Equation</value>
   </data>
-  <data name="equation_doesnt_contain_any_variables" xml:space="preserve">
-    <value>Equation doesn't contain any variables.</value>
-  </data>
-  <data name="equation_is_empthy" xml:space="preserve">
-    <value>Equation is empthy!</value>
-  </data>
   <data name="equation_is_not_valid" xml:space="preserve">
     <value>Equation is not valid!</value>
   </data>
-  <data name="equation_not_valid_amounts_of_)_and_(_are_not_equal" xml:space="preserve">
-    <value>Equation is not valid! Amounts of ')' and '(' are not equal!</value>
-  </data>
-  <data name="equation_not_valid_it_contains_not_allowed_cyrillic_symbols" xml:space="preserve">
-    <value>Equation is not valid! It contains not allowed cyrillic symbols!</value>
-  </data>
-  <data name="equation_not_valid_it_has_to_contains_variables_matching_pattern_X_(_number_0__9_)_" xml:space="preserve">
-    <value>Equation is not valid! It has to contains variables matching pattern 'X(number=0..9)'</value>
-  </data>
-  <data name="error_braket_missing" xml:space="preserve">
-    <value>Error!!! Braket(s) missing!</value>
-  </data>
-  <data name="error_creating_value_of_variable" xml:space="preserve">
-    <value>Error creating value of variable!</value>
-  </data>
-  <data name="error_geting_constant" xml:space="preserve">
-    <value>Error getting constant!</value>
+  <data name="error_invalid_accuracy" xml:space="preserve">
+    <value>Accuracy is not valid! It has to be bigger than 0 and less than 0.1!</value>
   </data>
   <data name="gradientDescend_nav_select_option" xml:space="preserve">
     <value>Gradient descend</value>
@@ -173,9 +146,6 @@
   </data>
   <data name="homePage_page_title" xml:space="preserve">
     <value>Home Page</value>
-  </data>
-  <data name="incorect_input_list_of_variable_values" xml:space="preserve">
-    <value>Incorrect input list of variable values!</value>
   </data>
   <data name="methods_nav" xml:space="preserve">
     <value>Methods</value>
@@ -188,5 +158,8 @@
   </data>
   <data name="this_is_required_field" xml:space="preserve">
     <value>This is required field!</value>
+  </data>
+  <data name="two_latter_iso_code" xml:space="preserve">
+    <value>en</value>
   </data>
 </root>

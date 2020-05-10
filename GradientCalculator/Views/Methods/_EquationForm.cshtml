@@ -8,13 +8,20 @@
         <div>
             <label asp-for="Equation"></label><br />
             <input asp-for="Equation" id="gradientMethod_equation_input_id" oninput="" />
-            <span style="color:darkred" asp-validation-for="Equation"></span>
+            <span id="input_equation_error_message" style="color:darkred"></span>
         </div>
 
         <div>
             <label asp-for="Accuracy"></label><br />
             <input type="number" placeholder="0,0001" step="any" asp-for="Accuracy" />
-            <span style="color:darkred" asp-validation-for="Accuracy"></span>
+            @if (!string.IsNullOrEmpty(ViewBag.InvalidAccuracyErrorMessage))
+            {
+                <span style="color:darkred" asp-validation-for="Accuracy">@Html.Raw(ViewBag.InvalidAccuracyErrorMessage)</span>
+            }
+            else
+            {
+                <span style="color:darkred" asp-validation-for="Accuracy"></span>
+            }
         </div>
 
         <div id="values_of_variables_list_id">
@@ -29,12 +36,9 @@
                     </div>
                 }
             }
-
         </div>
-
     </div>
 
-
-    <button class="btn btn-success" type="submit">Calculate</button>
+    <button class="btn btn-success" id="equation_form_submit_button_id" type="submit">Calculate</button>
 
 </form>

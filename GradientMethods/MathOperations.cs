@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GradientMethods.ExceptionResult;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace GradientMethods
         {
             if (valuesOfVariables == null)
             {
-                throw new Exception("Matrix is empty!!!");
+                throw new ArgumentNullException(nameof(valuesOfVariables));
             }
             const double step = 0.000001;
             if (!valuesOfVariables.ContainsKey(index))
@@ -42,7 +43,7 @@ namespace GradientMethods
         {
             if (valuesOfVariables == null)
             {
-                throw new Exception("Matrix is empty!!!");
+                throw new ArgumentNullException(nameof(valuesOfVariables));
             }
 
             Dictionary<char, double> gradient = new Dictionary<char, double>();
@@ -60,11 +61,11 @@ namespace GradientMethods
         {
             if (matrix == null)
             {
-                throw new Exception("Matrix is empty!!!");
+                throw new ArgumentNullException(nameof(matrix));
             }
             if (matrix.Count != matrix[0].Count)
             {
-                throw new Exception("Matrix is not square!!!");
+                throw new ArgumentException("Matrix is not square!!!");
             }
             if (matrix.Count == 1)
             {
@@ -129,7 +130,7 @@ namespace GradientMethods
 
             if (!isCorrect)
             {
-                throw new Exception("Incorrect calculating!!!");
+                throw new Exception("Сalculation error!");
             }
 
             return OA;
@@ -160,11 +161,11 @@ namespace GradientMethods
         {
             if (matrix == null)
             {
-                throw new Exception("Matrix is empty!!!");
+                throw new ArgumentNullException(nameof(matrix));
             }
             if (matrix.Count != matrix[0].Count)
             {
-                throw new Exception("Matrix is not square!!!");
+                throw new ArgumentException("Matrix is not square!!!");
             }
             int n = matrix.Count;
             List<List<double>> AA = new List<List<double>>(matrix);
@@ -201,23 +202,23 @@ namespace GradientMethods
         {
             if (matrix_A == null)
             {
-                throw new Exception("Matrix is empty!!!");
+                throw new ArgumentNullException(nameof(matrix_A));
             }
             if (matrix_A.Count != matrix_A[0].Count)
             {
-                throw new Exception("Matrix is not square!!!");
+                throw new ArgumentException("Matrix is not square!!!");
             }
             if (matrix_B == null)
             {
-                throw new Exception("Matrix is empty!!!");
+                throw new ArgumentNullException(nameof(matrix_B));
             }
             if (matrix_B.Count != matrix_B[0].Count)
             {
-                throw new Exception("Matrix is not square!!!");
+                throw new ArgumentException("Matrix is not square!!!");
             }
             if (matrix_A[0].Count != matrix_B.Count)
             {
-                throw new Exception("Impossible to multply two matrixes!!!");
+                throw new ArgumentException("Impossible to multply two matrixes!!!");
             }
             double S;
             int n = matrix_A.Count;
@@ -244,11 +245,11 @@ namespace GradientMethods
         {
             if (vector_A == null || vector_B == null)
             {
-                throw new Exception("Vector is empty!!!");
+                throw new ArgumentNullException();
             }
             if (vector_A.Count != vector_B.Count)
             {
-                throw new Exception("Range of vectors are not equal!!!");
+                throw new ArgumentException("Range of vectors are not equal!!!");
             }
             int n = vector_A.Count;
             double Sum = 0.0d;
@@ -263,11 +264,11 @@ namespace GradientMethods
         {
             if (vactor_A == null || vector_B == null)
             {
-                throw new Exception("Vector is empty!!!");
+                throw new ArgumentNullException();
             }
             if (vactor_A.Count != vector_B.Count)
             {
-                throw new Exception("Range of vectors are not equal!!!");
+                throw new ArgumentException("Range of vectors are not equal!!!");
             }
             List<double> result = new List<double>();
             for (int i = 0; i < vactor_A.Count; i++)
@@ -282,11 +283,11 @@ namespace GradientMethods
         {
             if (vactor_A == null || vector_B == null)
             {
-                throw new Exception("Vector is empty!!!");
+                throw new ArgumentNullException();
             }
             if (vactor_A.Count != vector_B.Count)
             {
-                throw new Exception("Range of vectors are not equal!!!");
+                throw new ArgumentException("Range of vectors are not equal!!!");
             }
             List<double> result = new List<double>();
             for (int i = 0; i < vactor_A.Count; i++)
@@ -306,7 +307,7 @@ namespace GradientMethods
         {
             if (vector == null)
             {
-                throw new Exception("Vector is empty!!!");
+                throw new ArgumentNullException(nameof(vector));
             }
             for (int i = 0; i < vector.Count; i++)
             {
@@ -348,11 +349,11 @@ namespace GradientMethods
         {
             if (function == null)
             {
-                throw new Exception("Unknown function!!!");
+                throw new ArgumentNullException(nameof(function));
             }
             if (valuesOfVariables == null)
             {
-                throw new Exception("Vector is empty!!!");
+                throw new ArgumentNullException(nameof(valuesOfVariables));
             }
             List<List<double>> hessian = new List<List<double>>(valuesOfVariables.Count);
             for (int i = 0; i < valuesOfVariables.Count; i++)

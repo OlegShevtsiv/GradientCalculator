@@ -26,7 +26,6 @@ namespace GradientCalculator.Controllers
         [HttpGet]
         public IActionResult GradientDescend()
         {
-
             return View();
         }
 
@@ -37,17 +36,12 @@ namespace GradientCalculator.Controllers
         {
             ViewBag.InputedValuesOfvariables = Equation.VarsConvertList.Where(v => req.ValuesOfVariables.Keys.Contains(v.Value)).ToDictionary(k => k.Value, v => v.Key);
 
-            if (!ModelState.IsValid || !double.TryParse(req.Accuracy, System.Globalization.NumberStyles.Any, Thread.CurrentThread.CurrentCulture.NumberFormat, out var accuracy) || accuracy < 0 || accuracy > 0.1)
+            if (!ModelState.IsValid)
             {
-                if (!double.TryParse(req.Accuracy, System.Globalization.NumberStyles.Any, Thread.CurrentThread.CurrentCulture.NumberFormat, out accuracy) || accuracy < 0 || accuracy > 0.1) 
-                {
-                    ViewBag.InvalidAccuracyErrorMessage = new StringBuilder(_localizer["error_invalid_accuracy"]).ToString();
-                }
-
                 return View();
             }
 
-            var result = GradientMethod.GradientDescent(new Equation(req.Equation), req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), accuracy, out int iterationsAmount);
+            var result = GradientMethod.GradientDescent(new Equation(req.Equation), req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, out int iterationsAmount);
 
             return View();
         }
@@ -66,19 +60,14 @@ namespace GradientCalculator.Controllers
         {
             ViewBag.InputedValuesOfvariables = Equation.VarsConvertList.Where(v => req.ValuesOfVariables.Keys.Contains(v.Value)).ToDictionary(k => k.Value, v => v.Key);
 
-            if (!ModelState.IsValid || !double.TryParse(req.Accuracy, out var accuracy) || accuracy < 0 || accuracy > 0.1)
+            if (!ModelState.IsValid)
             {
-                if (!double.TryParse(req.Accuracy, out accuracy) || accuracy < 0 || accuracy > 0.1)
-                {
-                    ViewBag.InvalidAccuracyErrorMessage = _localizer["error_invalid_accuracy"];
-                }
-
                 return View();
             }
 
 
             int iterationsAmount = 0;
-            var result = GradientMethod.Newton(new Equation(req.Equation), req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), accuracy, ref iterationsAmount);
+            var result = GradientMethod.Newton(new Equation(req.Equation), req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, ref iterationsAmount);
 
             return View();
         }

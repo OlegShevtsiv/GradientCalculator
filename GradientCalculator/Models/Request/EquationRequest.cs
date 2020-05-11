@@ -19,10 +19,10 @@ namespace GradientCalculator.Models.Request
         [Required(ErrorMessage = "this_is_required_field")]
         public Dictionary<char, double?> ValuesOfVariables { get; set; }
 
-
+        [Range(0, 0.1, ConvertValueInInvariantCulture = true, ParseLimitsInInvariantCulture = true, ErrorMessage = "error_invalid_accuracy")]
         [Required(ErrorMessage = "this_is_required_field")]
         [Display(Name = "Accuracy")]
-        public string Accuracy { get; set; }
+        public double Accuracy { get; set; }
 
 
         public EquationRequest()

@@ -1,7 +1,9 @@
-﻿using ImageController;
+﻿using GradientMethods.ExceptionResult;
+using ImageController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,11 +17,17 @@ namespace GradientMethods
         {
             try
             {
-                Equation eq = new Equation("0.1*(x1-x2^2)^2+(1.5-x2^2)^2");
-                
-                Console.WriteLine(eq);
+                //Equation eq = new Equation("0.1 * (x1 - x2 ^ 2)^2 +( 1.5 - x2 ^ 2) ^ 2");
+                //Equation eq = new Equation("(x1 + 10 * x2)^2 + 5*(x3 - x4)^2 + (x2 - 2*x3)^4 + 10*(x1-x4)^2");
+                Equation eq = new Equation("(x2-x1^2)^2 + 2*(1-x1)^2");
 
-                Dictionary<char, double> inputVars;
+                //Equation eq = new Equation("(x1^2 + x2-11)^2 + (x1+x2^2 -7)^2");
+
+
+
+                Console.WriteLine(eq.Display());
+
+                Dictionary<int, double> inputVars;
 
                 int iterAmount;
                 double eps;
@@ -28,35 +36,35 @@ namespace GradientMethods
                 while (choise == 1)
                 {
                     Console.Write("Enter accuracy of calculations: ");
-                    eps = Convert.ToDouble(Console.ReadLine());
+                    eps = double.TryParse(Console.ReadLine(), out var resEps) ? resEps : 0.00001d;
 
                     Console.WriteLine("------ Enter initial point ------");
-                    inputVars = new Dictionary<char, double>();
-                    foreach (var v in eq.Variables.OrderBy(vr => vr.Index))
+                    inputVars = new Dictionary<int, double>();
+                    foreach (var v in eq.VariablesValues.OrderBy(vr => vr.Index))
                     {
                         Console.Write($"------ {v} = ");
-                        inputVars.Add(Equation.VarsConvertList[v.Index], Convert.ToDouble(Console.ReadLine()));
+                        inputVars.Add(v.Index, Convert.ToDouble(Console.ReadLine()));
                         Console.WriteLine();
                     }
 
                     Console.WriteLine("============== RESULTS ==============");
 
 
-                    Console.WriteLine("Gradient Descent Method: ");
+                    //Console.WriteLine("Gradient Descent Method: ");
                     iterAmount = 0;
-                    List<double> GDResult = GradientMethod.GradientDescent(eq, inputVars, eps, out iterAmount);
+                    var GDResult = GradientMethod.Newton(eq, inputVars, eps, ref iterAmount);
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.DarkRed;
                     Console.Write("M(");
-                    for (int i = 0; i < GDResult.Count - 1; i++)
+                    for (int i = 0; i < GDResult.Count() - 1; i++)
                     {
-                        Console.Write($"{GDResult[i].ToString()},");
+                        Console.Write($"{GDResult.ElementAt(i).Value},");
                     }
-                    Console.Write($"{GDResult[GDResult.Count - 1]})");
+                    Console.Write($"{GDResult.ElementAt(GDResult.Count() - 1).Value})");
                     Console.ResetColor();
 
-                    Console.WriteLine($"\nF(M) = {Math.Round(eq[inputVars.Select(i => new KeyValuePair<char, double>(key: i.Key, value: GDResult[inputVars.Keys.ToList().IndexOf(i.Key)]))], 10)}");
+                    Console.WriteLine($"\nF(M) = {eq[GDResult]}");
 
                     Console.WriteLine($"Iterations amount: {iterAmount}");
 
@@ -98,10 +106,16 @@ namespace GradientMethods
 
 
             }
+            catch (LocalizedException exc)
+            {
+                Console.WriteLine(exc.GetLocalizedMessage(new CultureInfo("uk")));
+            }
             catch (Exception exc)
             {
                 Console.WriteLine(exc.Message);
             }
+
+            Console.ReadKey();
         }
     }
 }

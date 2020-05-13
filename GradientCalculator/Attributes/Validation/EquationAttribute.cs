@@ -20,8 +20,11 @@ namespace GradientCalculator.Attributes.Validation
             try 
             {
                 Equation eq = new Equation(value as string);
+
                 Random valueGenerator = new Random();
-                _ = eq[eq.Variables.Select(v => new KeyValuePair<char, double>(key: Equation.VarsConvertList[v.Index], valueGenerator.NextDouble())).ToList()];
+
+                _ = eq[eq.VariablesValues.Select(v => new KeyValuePair<int, double>(key: v.Index, valueGenerator.NextDouble())).ToList()];
+
                 return true;
             }
             catch (Exception exc)

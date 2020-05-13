@@ -15,7 +15,7 @@ input.oninput = function () {
                     for (let i = 0; i < valOfVarsList.childElementCount; i++) {
                         isExist = false;
                         for (let j = 0; j < response.data.length; j++) {
-                            if (valOfVarsList.childNodes[i].id == `variable_element_id_${response.data[j].Value}`) {
+                            if (valOfVarsList.childNodes[i].id == `variable_element_id_${response.data[j].index}`) {
                                 isExist = true;
                                 break;
                             }
@@ -26,12 +26,12 @@ input.oninput = function () {
                     }
 
                     for (let i = 0; i < response.data.length; i++) {
-                        if (!document.getElementById(`variable_element_id_${response.data[i].Value}`)) {
+                        if (!document.getElementById(`variable_element_id_${response.data[i].index}`)) {
                             valOfVarsList.insertAdjacentHTML('beforeend',
-                                `<div id="variable_element_id_${response.data[i].Value}">
-                                        <label>x${response.data[i].Key} :</label><br>
-                                        <input type = "number" oninput="" data-val="true" data-val-number="The field must be a number." id="ValuesOfVariables_${response.data[i].Value}_" name="ValuesOfVariables[${response.data[i].Value}]" value="" required>
-                                        <span style = "color:darkred" class="field-validation-valid" data-valmsg-for="ValuesOfVariables[${response.data[i].Value}]" data-valmsg-replace="true"></span>
+                                `<div id="variable_element_id_${response.data[i].index}">
+                                        <label>${response.data[i].name} :</label><br>
+                                        <input type = "number" oninput="" data-val="true" data-val-number="The field must be a number." id="ValuesOfVariables_${response.data[i].index}_" name="ValuesOfVariables[${response.data[i].index}]" value="" required>
+                                        <span style = "color:darkred" class="field-validation-valid" data-valmsg-for="ValuesOfVariables[${response.data[i].index}]" data-valmsg-replace="true"></span>
                                     </div>`)
                         }
                     }
@@ -49,6 +49,10 @@ input.oninput = function () {
                         let errorMessage = document.getElementById('input_equation_error_message');
                         errorMessage.innerText = response.errorMessage;
                     }
+
+
+
+
                     //let valOfVarsList = document.getElementById('values_of_variables_list_id');
 
                     //if (valOfVarsList && valOfVarsList.childNodes.length > 0)

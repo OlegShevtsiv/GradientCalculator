@@ -123,6 +123,9 @@
   <data name="Accuracy" xml:space="preserve">
     <value>Accuracy</value>
   </data>
+  <data name="calculation_error" xml:space="preserve">
+    <value>Сalculation error!</value>
+  </data>
   <data name="cratedBy_footer" xml:space="preserve">
     <value>created by Oleg Shevtsiv</value>
   </data>

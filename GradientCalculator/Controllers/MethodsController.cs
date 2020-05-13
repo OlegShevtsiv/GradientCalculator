@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using GradientCalculator.Middlewares.Filters;
 using GradientCalculator.Models.Request;
 using GradientMethods;
+using GradientMethods.ExceptionResult;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 
@@ -16,9 +17,9 @@ namespace GradientCalculator.Controllers
     [ServiceFilter(typeof(LanguageActionFilter))]
     public class MethodsController : Controller
     {
-        private readonly IStringLocalizer<SharedResource> _localizer;
+        private readonly IStringLocalizer<CommonResource> _localizer;
 
-        public MethodsController(IStringLocalizer<SharedResource> localizer)
+        public MethodsController(IStringLocalizer<CommonResource> localizer)
         {
             this._localizer = localizer;
         }
@@ -34,14 +35,29 @@ namespace GradientCalculator.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult GradientDescend (EquationRequest req)
         {
-            ViewBag.InputedValuesOfvariables = Equation.VarsConvertList.Where(v => req.ValuesOfVariables.Keys.Contains(v.Value)).ToDictionary(k => k.Value, v => v.Key);
+            ViewBag.InputedValuesOfvariables = req.ValuesOfVariables.Keys.ToList();
 
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-            var result = GradientMethod.GradientDescent(new Equation(req.Equation), req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, out int iterationsAmount);
+            try
+            {
+                Equation equation = new Equation(req.Equation);
+
+                var result = GradientMethod.GradientDescent(equation, req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, out int iterationsAmount);
+
+                var f_x = equation[result];
+            }
+            catch (LocalizedException exc)
+            {
+                ViewBag.Error = exc.GetLocalizedMessage(Thread.CurrentThread.CurrentUICulture);
+            }
+            catch (Exception exc)
+            {
+                ViewBag.Error = _localizer["calculation_error"];
+            }
 
             return View();
         }
@@ -58,16 +74,31 @@ namespace GradientCalculator.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Newton (EquationRequest req)
         {
-            ViewBag.InputedValuesOfvariables = Equation.VarsConvertList.Where(v => req.ValuesOfVariables.Keys.Contains(v.Value)).ToDictionary(k => k.Value, v => v.Key);
+            ViewBag.InputedValuesOfvariables = req.ValuesOfVariables.Keys.ToList();
 
             if (!ModelState.IsValid)
             {
                 return View();
             }
 
-
             int iterationsAmount = 0;
-            var result = GradientMethod.Newton(new Equation(req.Equation), req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, ref iterationsAmount);
+
+            try
+            {
+                Equation equation = new Equation(req.Equation);
+
+                var result = GradientMethod.Newton(equation, req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, ref iterationsAmount);
+
+                var f_x = equation[result];
+            }
+            catch (LocalizedException exc)
+            {
+                ViewBag.Error = exc.GetLocalizedMessage(Thread.CurrentThread.CurrentUICulture);
+            }
+            catch (Exception exc) 
+            {
+                ViewBag.Error = _localizer["calculation_error"];
+            }
 
             return View();
         }

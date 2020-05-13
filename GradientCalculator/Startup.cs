@@ -6,12 +6,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using GradientCalculator.Attributes.Validation;
 using GradientCalculator.Configs;
+using GradientCalculator.Data.Sqlite;
 using GradientCalculator.Middlewares;
 using GradientCalculator.Middlewares.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,6 +43,9 @@ namespace GradientCalculator
 
             services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
 
+            services.AddDbContext<SqliteContext>(options =>
+                options.UseSqlite("Filename=SqliteStorage.db"));
+
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>
             {
@@ -57,7 +62,7 @@ namespace GradientCalculator
             services.AddControllersWithViews()
                 .AddDataAnnotationsLocalization(options => {
                     options.DataAnnotationLocalizerProvider = (type, factory) =>
-                        factory.Create(typeof(SharedResource));
+                        factory.Create(typeof(CommonResource));
                 })
                 .AddViewLocalization();
         }

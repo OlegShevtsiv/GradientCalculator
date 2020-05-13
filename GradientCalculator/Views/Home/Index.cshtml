@@ -1,6 +1,19 @@
-﻿@inject IHtmlLocalizer<SharedResource> localizer
+﻿@inject IHtmlLocalizer<CommonResource> commonLocalizer
+@inject IViewLocalizer pageLocalizer;
 
 @{
-    ViewData["Title"] = localizer["homePage_page_title"];
+    ViewData["Title"] = commonLocalizer["homePage_page_title"];
 }
 
+<h3><b>@pageLocalizer["main_content_title"]</b></h3>
+<div>
+    @Html.Raw(pageLocalizer["main_content_text"].Value)
+</div>
+
+<br />
+
+<h3><b>@pageLocalizer["general_provisions_content_title"]</b></h3>
+
+<div>
+    @Html.Raw(pageLocalizer["general_provisions_content_text"].Value)
+</div>

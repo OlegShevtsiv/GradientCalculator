@@ -1,11 +1,11 @@
-﻿@inject IHtmlLocalizer<SharedResource> localizer
+﻿@inject IHtmlLocalizer<CommonResource> localizer
 
 @{
     ViewData["Title"] = localizer["gradientDescend_page_title"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ActionName = "GradientDescend";
 }
 
 <h1>GradientDescend</h1>
-@{ViewBag.ActionName = "GradientDescend";}
 
 <partial name="_EquationForm.cshtml">

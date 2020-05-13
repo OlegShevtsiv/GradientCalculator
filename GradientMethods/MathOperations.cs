@@ -12,23 +12,23 @@ namespace GradientMethods
         /// </summary>
         /// <param name="function"></param>
         /// <param name="valuesOfVariables"></param>
-        /// <param name="index"></param>
+        /// <param name="variableIndex"></param>
         /// <returns></returns>
-        static double df(Equation function, Dictionary<char, double> valuesOfVariables, char index)
+        static double df(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables, int variableIndex)
         {
             if (valuesOfVariables == null)
             {
                 throw new ArgumentNullException(nameof(valuesOfVariables));
             }
             const double step = 0.000001;
-            if (!valuesOfVariables.ContainsKey(index))
+            if (valuesOfVariables.Count(v => v.Key == variableIndex) == 0)
             {
                 throw new KeyNotFoundException();
             }
 
-            Dictionary<char, double> X_h = new Dictionary<char, double>(valuesOfVariables);
+            Dictionary<int, double> X_h = new Dictionary<int, double>(valuesOfVariables);
 
-            X_h[index] += step;
+            X_h[variableIndex] += step;
 
             return (function[X_h] - function[valuesOfVariables]) / step;
         }
@@ -39,14 +39,16 @@ namespace GradientMethods
         /// <param name="function"></param>
         /// <param name="valuesOfVariables"></param>
         /// <returns></returns>
-        static Dictionary<char, double> Gradient(Equation function, Dictionary<char, double> valuesOfVariables)
+        static IEnumerable<KeyValuePair<int, double>> Gradient(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables)
         {
             if (valuesOfVariables == null)
             {
                 throw new ArgumentNullException(nameof(valuesOfVariables));
             }
 
-            Dictionary<char, double> gradient = new Dictionary<char, double>();
+            valuesOfVariables = valuesOfVariables.OrderBy(v => v.Key).ToList();
+
+            Dictionary<int, double> gradient = new Dictionary<int, double>();
 
 
             foreach (var x in valuesOfVariables)
@@ -345,7 +347,7 @@ namespace GradientMethods
         /// <param name="function"></param>
         /// <param name="valuesOfVariables"></param>
         /// <returns></returns>
-        static List<List<double>> Hessian(Equation function, Dictionary<char, double> valuesOfVariables) 
+        static List<List<double>> Hessian(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables) 
         {
             if (function == null)
             {
@@ -355,11 +357,14 @@ namespace GradientMethods
             {
                 throw new ArgumentNullException(nameof(valuesOfVariables));
             }
-            List<List<double>> hessian = new List<List<double>>(valuesOfVariables.Count);
-            for (int i = 0; i < valuesOfVariables.Count; i++)
+
+            valuesOfVariables = valuesOfVariables.OrderBy(v => v.Key).ToList();
+
+            List<List<double>> hessian = new List<List<double>>(valuesOfVariables.Count());
+            for (int i = 0; i < valuesOfVariables.Count(); i++)
             {
-                hessian.Add(new List<double>(valuesOfVariables.Count));
-                for (int j = 0; j < valuesOfVariables.Count; j++)
+                hessian.Add(new List<double>(valuesOfVariables.Count()));
+                for (int j = 0; j < valuesOfVariables.Count(); j++)
                 {
                     hessian[i].Add(0.0d);
                 }
@@ -368,36 +373,38 @@ namespace GradientMethods
             double step = 0.00001;
             double curFValue = function[valuesOfVariables];
 
-            List<double> fPlus = new List<double>(valuesOfVariables.Count);
-            List<double> fMinus = new List<double>(valuesOfVariables.Count);
+            List<double> fPlus = new List<double>(valuesOfVariables.Count());
+            List<double> fMinus = new List<double>(valuesOfVariables.Count());
 
             List<double> tempList;
             int index = 0;
 
-            for (int i = 0; i < valuesOfVariables.Count; i++)
+            List<double> values = valuesOfVariables.Select(v => v.Value).ToList();
+
+            for (int i = 0; i < valuesOfVariables.Count(); i++)
             {
                 index = 0;
-                tempList = SumVectors(valuesOfVariables.Values.ToList(), MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count, i), step));
-                fPlus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<char, double>(key: x.Key, value: tempList[index++]))]);
+                tempList = SumVectors(values, MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count(), i), step));
+                fPlus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<int, double>(key: x.Key, value: tempList[index++])).ToList()]);
 
                 index = 0;
-                tempList = SubtractVectors(valuesOfVariables.Values.ToList(), MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count, i), step));
-                fMinus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<char, double>(key: x.Key, value: tempList[index++]))]);
+                tempList = SubtractVectors(values, MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count(), i), step));
+                fMinus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<int, double>(key: x.Key, value: tempList[index++])).ToList()]);
                 hessian[i][i] = (fPlus[i] - 2 * curFValue + fMinus[i]) / (step * step);
             }
 
-            for (int i = 0; i < valuesOfVariables.Count; i++)
+            for (int i = 0; i < valuesOfVariables.Count(); i++)
             {
-                for (int j = i + 1; j < valuesOfVariables.Count; j++)
+                for (int j = i + 1; j < valuesOfVariables.Count(); j++)
                 {
                     index = 0;
-                    tempList = SumVectors(valuesOfVariables.Values.ToList(), MultiplyVectorOnValue(SumVectors(UnitVector(valuesOfVariables.Count, i), UnitVector(valuesOfVariables.Count, j)), step));
-                    double x = function[valuesOfVariables.Select(x1 => new KeyValuePair<char, double>(key: x1.Key, value: tempList[index++]))];
+                    tempList = SumVectors(values, MultiplyVectorOnValue(SumVectors(UnitVector(valuesOfVariables.Count(), i), UnitVector(valuesOfVariables.Count(), j)), step));
+                    double x = function[valuesOfVariables.Select(x1 => new KeyValuePair<int, double>(key: x1.Key, value: tempList[index++])).ToList()];
                     hessian[i][j] = (x - fPlus[i] - fPlus[j] + curFValue) / (step * step);
                 }
             }
 
-            for (int i = 0; i < valuesOfVariables.Count; i++)
+            for (int i = 0; i < valuesOfVariables.Count(); i++)
             {
                 for (int j = 0; j < i; j++)
                 {

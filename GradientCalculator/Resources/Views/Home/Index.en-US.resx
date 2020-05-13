@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="general_provisions_content_text" xml:space="preserve">
+    <value>&lt;p&gt;Lets onsider the problem of unconditional minimization
+f (x) → inf, x∈R&lt;sup&gt;n&lt;/sup&gt; (1). &lt;/p&gt;
+&lt;p&gt; Any numerical method for solving an optimization problem is based on an accurate or approximate calculation of certain characteristics (value of the goal function, value of derivatives, etc.). Based on the information obtained, we build an approximation to the solution of the problem. This can be the value of x&lt;sub&gt;*&lt;/sub&gt;, the set of values of X&lt;sub&gt;*&lt;/sub&gt;, or the value of the goal function f&lt;sub&gt;*&lt;/sub&gt; = min f(x). &lt;/p&gt;</value>
+  </data>
+  <data name="general_provisions_content_title" xml:space="preserve">
+    <value>General provisions</value>
+  </data>
+  <data name="main_content_text" xml:space="preserve">
+    <value>&lt;p&gt;Gradient methods are approximate numerical methods for solving nonlinear programming problems because they provide an exact solution for an infinite number and, in some cases, for a finite number of steps. They can be used to solve any nonlinear programming problem, usually finding only the local extremum.&lt;/p&gt;
+&lt;p&gt;The idea of ​​gradient methods is based on the fact that the direction of the gradient is the direction of the fastest growth of the function. Therefore, the opposite direction is the direction of the fastest decline of the gradient function perpendicular at any point of the constant level line, because along this line the value of the function is constant. In the &lt;b&gt; fastest descent method &lt;/b&gt;, the minimum function is searched along the direction facing the direction of the gradient. As a criterion for completing the calculations, the proximity to zero of the gradient is most often used. The main difficulty in applying the method of the fastest descent is its dependence on the choice of the scale of the optimized variables.&lt;/p&gt;
+&lt;p&gt;Methods that use the second derivative use the Hesse matrix, which must be inverted at each step, as in the &lt;b&gt;Newton-Rafson method&lt;/b&gt;. Since this procedure can take the main computational time, approximations to it are used, and a positively defined symmetric matrix ultimately becomes equal asymptotically equal to the Hesse matrix under certain conditions, as in the &lt;b&gt;Davidson-Fletcher-Pavel method&lt;/b&gt;.&lt;/ p&gt;
+&lt;p&gt; The main idea of ​​the &lt;b&gt;fines method&lt;/b&gt; for solving the optimization problem with constraints is to transform the problem of minimizing a function with constraints into a problem of finding a minimum without constraints of a modified function, in which an additional component formed on the basis of constraints Would "penalize" the modified function, increasing its value. Based on this idea, the &lt;b&gt;Fiaco-McCormick method&lt;/b&gt;, which uses the Davidson-Fletcher-Pavel method as a step of the algorithm, and the &lt;b&gt;Boxing method&lt;/b&gt;, which is, in fact, a modification of the Simplex method of Nepder- Mead, which allows you to take into account the limitations.&lt;/p&gt;
+&lt;p&gt;Another method is designed to find a solution to the problem of nonlinear programming, namely the &lt;b&gt;Frank-Wolf method&lt;/b&gt;, which belongs to the category of gradient methods and the procedure of which involves determining the optimal plan by searching for solutions that are valid task plans.&lt;/p&gt;
+&lt;p&gt;In general, the whole work is divided into three parts. The first is a detailed consideration of two gradient methods, the fastest descent method and the Newton-Rafson method. The second part will describe the tools for developing a calculator and its actual implementation. And in the third part there will be a demonstration of the system and all its functionalities, as well as examples of the actual solution of optimization problems.&lt;/p&gt;</value>
+  </data>
+  <data name="main_content_title" xml:space="preserve">
+    <value>Gradient methods</value>
+  </data>
+</root>

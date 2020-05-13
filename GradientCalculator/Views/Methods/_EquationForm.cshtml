@@ -1,5 +1,5 @@
 ﻿@model EquationRequest;
-@inject IHtmlLocalizer<SharedResource> localizer
+@inject IViewLocalizer _localizer;
 
 <form asp-controller="Methods" asp-action="@ViewBag.ActionName" method="post">
     <div>
@@ -7,38 +7,31 @@
 
         <div>
             <label asp-for="Equation"></label><br />
-            <input asp-for="Equation" id="gradientMethod_equation_input_id" oninput="" />
+            <input asp-for="Equation" id="gradientMethod_equation_input_id" required/>
             <span id="input_equation_error_message" style="color:darkred"></span>
         </div>
 
         <div>
             <label asp-for="Accuracy"></label><br />
-            <input type="number" placeholder="0,0001" step="any" asp-for="Accuracy" />
-            @if (!string.IsNullOrEmpty(ViewBag.InvalidAccuracyErrorMessage))
-            {
-                <span style="color:darkred" asp-validation-for="Accuracy">@Html.Raw(ViewBag.InvalidAccuracyErrorMessage)</span>
-            }
-            else
-            {
-                <span style="color:darkred" asp-validation-for="Accuracy"></span>
-            }
+            <input type="number" placeholder="0.0001" step="any" asp-for="Accuracy" required/>
+            <span style="color:darkred" asp-validation-for="Accuracy"></span>
         </div>
 
         <div id="values_of_variables_list_id">
-            @if (ViewBag.InputedValuesOfvariables != null)
+            @if (ViewBag.InputedValuesOfvariables?.Count > 0)
             {
-                foreach (var v in (ViewBag.InputedValuesOfvariables as Dictionary<char, int>))
+                foreach (var v in (ViewBag.InputedValuesOfvariables as List<int>))
                 {
-                    <div id="variable_element_id_@(v.Key)">
-                        <label>x@(v.Value) :</label><br />
-                        <input type="number" asp-for="ValuesOfVariables[v.Key]" required/>
-                        <span style="color:darkred" asp-validation-for="ValuesOfVariables[v.Key]"></span>
+                    <div id="variable_element_id_@(v)">
+                        <label>x@(v) :</label><br />
+                        <input type="number" asp-for="ValuesOfVariables[v]" required />
+                        <span style="color:darkred" asp-validation-for="ValuesOfVariables[v]"></span>
                     </div>
                 }
             }
         </div>
     </div>
 
-    <button class="btn btn-success" id="equation_form_submit_button_id" type="submit">Calculate</button>
+    <button class="btn btn-success" id="equation_form_submit_button_id" type="submit">@_localizer["Calculate"]</button>
 
 </form>

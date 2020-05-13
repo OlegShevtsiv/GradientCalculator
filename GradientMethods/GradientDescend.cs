@@ -6,22 +6,22 @@ namespace GradientMethods
 {
     public partial class GradientMethod
     {
-        static public List<double> GradientDescent(Equation function, IEnumerable<KeyValuePair<char, double>> valuesOfVariables, double accuracy, out int iterationsAmount)
+        static public IEnumerable<KeyValuePair<int, double>> GradientDescent(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables, double accuracy, out int iterationsAmount)
         {
             iterationsAmount = 0;
 
             double S;
 
-            Dictionary<char, double> G = new Dictionary<char, double>();// gradient
-            Dictionary<char, double> M0 = new Dictionary<char, double>(valuesOfVariables);// current point 
-            Dictionary<char, double> M1 = new Dictionary<char, double>(); // point to find
+            Dictionary<int, double> G = new Dictionary<int, double>();// gradient
+            Dictionary<int, double> M0 = new Dictionary<int, double>(valuesOfVariables.OrderBy(v => v.Key).ToList());// current point 
+            Dictionary<int, double> M1 = new Dictionary<int, double>(); // point to find
 
             double a = 1.0d;
             do
             {
                 S = 0.0d;
-                G = Gradient(function, M0);
-                M1 = new Dictionary<char, double>();
+                G = new Dictionary<int, double>(Gradient(function, M0));
+                M1 = new Dictionary<int, double>();
 
                 foreach (var x in valuesOfVariables)
                 {
@@ -44,7 +44,16 @@ namespace GradientMethods
                 }
             }
             while ((a >= accuracy) && (Math.Abs(Math.Sqrt(S)) >= accuracy));
-            return M0.Values.ToList();
+
+            int acuracyAmountAfterComa = 0;
+
+            while (accuracy < 1)
+            {
+                accuracy *= 10;
+                acuracyAmountAfterComa++;
+            }
+
+            return M0.Select(v => new KeyValuePair<int, double>(v.Key, Math.Round(v.Value, acuracyAmountAfterComa))).ToList();
         }
     }
 }

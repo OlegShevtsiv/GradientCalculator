@@ -20,8 +20,8 @@ namespace GradientCalculator.Controllers
     //[ServiceFilter(typeof(LanguageActionFilter))]
     public class MethodsAPIController : ControllerBase
     {
-        private readonly IStringLocalizer<SharedResource> _localizer;
-        public MethodsAPIController(IStringLocalizer<SharedResource> localizer)
+        private readonly IStringLocalizer<CommonResource> _localizer;
+        public MethodsAPIController(IStringLocalizer<CommonResource> localizer)
         {
             this._localizer = localizer;
         }
@@ -33,7 +33,11 @@ namespace GradientCalculator.Controllers
             {
                 Equation equation = new Equation(eq);
 
-                return new WebScriptResponseResult(equation.Variables.OrderBy(v => v.Index).Select(v => new KeyValuePair<int, char>(v.Index, Equation.VarsConvertList[v.Index])).ToList());
+                Random valueGenerator = new Random();
+
+                _ = equation[equation.VariablesValues.Select(v => new KeyValuePair<int, double>(key: v.Index, valueGenerator.NextDouble())).ToList()];
+
+                return new WebScriptResponseResult(equation.VariablesValues.OrderBy(v => v.Index).Select(v => new { index = v.Index, name = v.Name }).ToList());
             }
             catch (LocalizedException exc)
             {

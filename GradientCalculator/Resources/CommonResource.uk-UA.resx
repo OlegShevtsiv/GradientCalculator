@@ -123,6 +123,9 @@
   <data name="Accuracy" xml:space="preserve">
     <value>Точність</value>
   </data>
+  <data name="calculation_error" xml:space="preserve">
+    <value>Помилка обчислень!</value>
+  </data>
   <data name="cratedBy_footer" xml:space="preserve">
     <value>робота Олега Шевціва</value>
   </data>

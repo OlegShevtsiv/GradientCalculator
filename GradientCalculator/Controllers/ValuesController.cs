@@ -3,16 +3,27 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using GradientCalculator.Configs;
 using GradientCalculator.Models;
 using GradientCalculator.ViewModels;
+using GradientMethods;
+using GradientMethods.ExceptionResult;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace GradientCalculator.Controllers
 {
     public class ValuesController : Controller
     {
+        private readonly IStringLocalizer<CommonResource> _localizer;
+
+        public ValuesController(IStringLocalizer<CommonResource> localizer)
+        {
+            this._localizer = localizer;
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ChangeCulture(ChangeLangVM model)

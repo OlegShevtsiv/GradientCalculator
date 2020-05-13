@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using GradientCalculator.Data.Sqlite;
+using GradientCalculator.Data.Sqlite.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -15,7 +17,7 @@ namespace Rezervist.Middlewares
         {
             this.next = next;
         }
-        public async Task Invoke(HttpContext context, ILogger<ErrorHandlingMiddleware> _logger/*, RezContext _context*/)
+        public async Task Invoke(HttpContext context, ILogger<ErrorHandlingMiddleware> _logger, SqliteContext _context)
         {
             try
             {
@@ -26,16 +28,15 @@ namespace Rezervist.Middlewares
 #if DEBUG
                 await HandleExceptionAsync(context, ex, _logger);
 #else
-               //_context.ErrorLogger.Add(new ErrorLogger(context, ex));
-               // _context.SaveChanges();
-               // await next(context);
+               _context.ExceptionLogs.Add(new ExceptionLog(context, ex));
+                _context.SaveChanges();
+                await next(context);
 #endif
             }
         }
-        private static Task HandleExceptionAsync(
-            HttpContext context,
-            Exception exception,
-            ILogger<ErrorHandlingMiddleware> _logger)
+        private static Task HandleExceptionAsync(HttpContext context,
+                                                 Exception exception,
+                                                 ILogger<ErrorHandlingMiddleware> _logger)
         {
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected
             _logger.LogError("Unhandled excetion. {0}", exception);

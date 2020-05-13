@@ -9,7 +9,9 @@ namespace GradientMethods.ExceptionResult
 {
     public class LocalizedException : Exception
     {
-        private string localizationMessageKey { get; set; }
+        private string localizationMessageKey;
+
+        private readonly CultureInfo DefaultCulture = new CultureInfo("en");
 
         /// <summary>
         /// Create new instance of object with localized messeges by key, existed in resource collection otherwise creates default Exception
@@ -63,12 +65,21 @@ namespace GradientMethods.ExceptionResult
         public string GetLocalizedMessage(CultureInfo cultureInfo)
         {
             var lang = new ExceptionCultureInfo(cultureInfo);
-            if (lang != null
-             && !string.IsNullOrEmpty(this.localizationMessageKey)
-             && this.LocalizedStringsBase.ContainsKey(lang)
-             && this.LocalizedStringsBase[lang].ContainsKey(this.localizationMessageKey))
+            if (lang != null && !string.IsNullOrEmpty(this.localizationMessageKey))
             {
-                return this.LocalizedStringsBase[lang][this.localizationMessageKey];
+
+                if (this.LocalizedStringsBase.ContainsKey(lang))
+                {
+                    if (this.LocalizedStringsBase[lang].ContainsKey(this.localizationMessageKey))
+                    {
+                        return this.LocalizedStringsBase[lang][this.localizationMessageKey];
+                    }
+                }
+                else if (this.LocalizedStringsBase[new ExceptionCultureInfo(this.DefaultCulture)].ContainsKey(this.localizationMessageKey)) 
+                {
+                    return this.LocalizedStringsBase[new ExceptionCultureInfo(this.DefaultCulture)][this.localizationMessageKey];
+                }
+                return null;
             }
             else
             {
@@ -93,7 +104,8 @@ namespace GradientMethods.ExceptionResult
                     { "error_geting_constant", "Error getting constant!" },
                     { "incorect_input_list_of_variable_values", "Incorrect input list of variable values!" },
                     { "calculation_error", "Сalculation error!" },
-                    { "constant_not_found", "Сonstant not found!" }
+                    { "constant_not_found", "Сonstant not found!" },
+                    { "dividing_by_zero", "Error! Dividing by zero is not allowed!" }
                 }
             },
 
@@ -107,12 +119,13 @@ namespace GradientMethods.ExceptionResult
                     { "equation_not_valid_amounts_of_)_and_(_are_not_equal", "Рівняння некоректне! Кількість ')' та '(' не однакові!" },
                     { "equation_not_valid_it_contains_not_allowed_cyrillic_symbols", "Рівняння некоректне! Кириличні символи заборонені!" },
                     { "equation_not_valid_it_has_to_contains_variables_matching_pattern_X_(_number_0__9_)_", "Рівняння некоректне! Воно повинне містити змінні, що відповідають шаблону 'X{numer=0..9}'!" },
-                    { "error_braket_missing", "Помилка !!! Недостатньо дужок!" },
+                    { "error_braket_missing", "Помилка ! Недостатньо дужок!" },
                     { "error_creating_value_of_variable", "Помилка створення значення змінної!" },
                     { "error_geting_constant", "Помилка отримання константи!" },
                     { "incorect_input_list_of_variable_values", "Вхідні значення змінних некоректні!" },
                     { "calculation_error", "Помилка обчислень!" },
-                    { "constant_not_found", "Константа не знайдена!" }
+                    { "constant_not_found", "Константа не знайдена!" },
+                    { "dividing_by_zero", "Помилка! Ділення на нуль не дозволене!" }
                 }
             }
         };

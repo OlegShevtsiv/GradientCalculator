@@ -1,0 +1,16 @@
+﻿@model EquationCalcResponse;
+
+@if (Model != default && Model.ExtremumPoint != default && Model.FunctionValue != default && Model.IterationAmount != default)
+{
+    foreach (var v in Model.ExtremumPoint) 
+    {
+        <p>
+            @(v.Name) = @(v.Value)
+        </p>
+    }
+
+    <br />
+
+    <p>F(@(Model.ExtremumPoint.Select(p => p.Name).Aggregate((x, y) => $"{x}, {y}"))) = @Model.FunctionValue</p>
+    <p>Iteration Amount: @Model.IterationAmount</p>
+}

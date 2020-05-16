@@ -16,10 +16,16 @@ namespace GradientMethods
         /// <returns></returns>
         static double df(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables, int variableIndex)
         {
+            if (function == null)
+            {
+                throw new ArgumentNullException(nameof(function));
+            }
+
             if (valuesOfVariables == null)
             {
                 throw new ArgumentNullException(nameof(valuesOfVariables));
             }
+
             const double step = 0.000001;
             if (valuesOfVariables.Count(v => v.Key == variableIndex) == 0)
             {
@@ -41,6 +47,11 @@ namespace GradientMethods
         /// <returns></returns>
         static IEnumerable<KeyValuePair<int, double>> Gradient(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables)
         {
+            if (function == null) 
+            {
+                throw new ArgumentNullException(nameof(function));
+            }
+
             if (valuesOfVariables == null)
             {
                 throw new ArgumentNullException(nameof(valuesOfVariables));

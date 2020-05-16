@@ -47,7 +47,7 @@ namespace GradientMethods
             {'e', Math.E}
         };
 
-        public List<VarValue> VariablesValues { get; set; }
+        public List<VarValue> VariablesValues { get; private set; }
 
         /// <summary>
         /// <para> Use this legend to write your equation correct:</para> 
@@ -55,7 +55,7 @@ namespace GradientMethods
         /// <para> Math constants -- π or p, e</para> 
         /// <para> Functions -- sin(), cos(), asin(), acos(), tan(), cot(), arctan(), arccot(), sinh(), cosh(), tanh(), ln(), lg(), || </para> 
         /// </summary>
-        /// <param name="equation">Equation.</param>
+        /// <param name="equation">Equation string</param>
         public Equation(string equation)
         {
             this.equation = this.Normalyze(equation);
@@ -397,34 +397,6 @@ namespace GradientMethods
                 return equationPart;
             }
 
-            if (equationPart.Contains("asin"))
-            {
-                return GetPart(nameof(Math.Asin), Math.Asin);
-            }
-            if (equationPart.Contains("acos"))
-            {
-                return GetPart(nameof(Math.Acos), Math.Acos);
-            }
-            if (equationPart.Contains("arctan"))
-            {
-                return GetPart("arctan", Math.Atan);
-            }
-            if (equationPart.Contains("arccot"))
-            {
-                return GetPart("arccot", MathExtension.Acot);
-            }
-            if (equationPart.Contains("sinh"))
-            {
-                return GetPart(nameof(Math.Sinh), Math.Sinh);
-            }
-            if (equationPart.Contains("cosh"))
-            {
-                return GetPart(nameof(Math.Cosh), Math.Cosh);
-            }
-            if (equationPart.Contains("tanh"))
-            {
-                return GetPart(nameof(Math.Tanh), Math.Tanh);
-            }
             if (equationPart.Contains("sin"))
             {
                 return GetPart(nameof(Math.Sin), Math.Sin);
@@ -452,6 +424,34 @@ namespace GradientMethods
             if (equationPart.Contains("|"))
             {
                 return GetPart("|", Math.Abs);
+            }
+            if (equationPart.Contains("asin"))
+            {
+                return GetPart(nameof(Math.Asin), Math.Asin);
+            }
+            if (equationPart.Contains("acos"))
+            {
+                return GetPart(nameof(Math.Acos), Math.Acos);
+            }
+            if (equationPart.Contains("arctan"))
+            {
+                return GetPart("arctan", Math.Atan);
+            }
+            if (equationPart.Contains("arccot"))
+            {
+                return GetPart("arccot", MathExtension.Acot);
+            }
+            if (equationPart.Contains("sinh"))
+            {
+                return GetPart(nameof(Math.Sinh), Math.Sinh);
+            }
+            if (equationPart.Contains("cosh"))
+            {
+                return GetPart(nameof(Math.Cosh), Math.Cosh);
+            }
+            if (equationPart.Contains("tanh"))
+            {
+                return GetPart(nameof(Math.Tanh), Math.Tanh);
             }
             return equationPart;
         }

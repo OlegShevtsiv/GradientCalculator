@@ -1,16 +1,15 @@
-﻿
+﻿@inject IViewLocalizer pageLocalizer;
 @{
-    ViewData["Title"] = "Plot2D";
+    ViewData["Title"] = pageLocalizer["page_title"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="https://www.desmos.com/api/v1.5/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6&lang=en,uk"></script>
 
-<div id="calculator" style="
-        width: 100%;
-        height: 700px;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;"></div>
+<div id="calculator" style="width: 100%;
+                            height: 700px;
+                            margin: 0;
+                            padding: 0;
+                            overflow: hidden;"></div>
 <script>
     var elt = document.getElementById('calculator');
     var options = { border: false, invertedColors: true };

@@ -27,6 +27,8 @@ namespace GradientCalculator.Models.Request
 
         public EquationRequest()
         {
+            this.Equation = string.Empty;
+            this.Accuracy = 0.00001d;
             this.ValuesOfVariables = new Dictionary<int, double?>();
         }
     }

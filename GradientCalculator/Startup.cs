@@ -44,7 +44,7 @@ namespace GradientCalculator
             services.AddSingleton<IValidationAttributeAdapterProvider, CustomValidationAttributeAdapterProvider>();
 
             services.AddDbContext<SqliteContext>(options =>
-                options.UseSqlite($"Filename={SqliteContext.SliteFileName}"));
+                options.UseSqlite($"Filename={SqliteContext.FileName}"));
 
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.Configure<RequestLocalizationOptions>(options =>

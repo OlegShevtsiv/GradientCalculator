@@ -118,14 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="general_provisions_content_text" xml:space="preserve">
-    <value>&lt;p&gt;Lets onsider the problem of unconditional minimization
-f (x) → inf, x∈R&lt;sup&gt;n&lt;/sup&gt; (1). &lt;/p&gt;
-&lt;p&gt; Any numerical method for solving an optimization problem is based on an accurate or approximate calculation of certain characteristics (value of the goal function, value of derivatives, etc.). Based on the information obtained, we build an approximation to the solution of the problem. This can be the value of x&lt;sub&gt;*&lt;/sub&gt;, the set of values of X&lt;sub&gt;*&lt;/sub&gt;, or the value of the goal function f&lt;sub&gt;*&lt;/sub&gt; = min f(x). &lt;/p&gt;
+    <value>&lt;p&gt;Lets consider the problem of unconditional minimization
+&lt;em&gt;f (x) → inf, x∈R&lt;sup&gt;n&lt;/sup&gt;&lt;/em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;(1). &lt;/p&gt;
+&lt;p&gt; Any numerical method for solving an optimization problem is based on an accurate or approximate calculation of certain characteristics (value of the goal function, value of derivatives, etc.). Based on the information obtained, we build an approximation to the solution of the problem. This can be the value of &lt;em&gt;x&lt;sub&gt;*&lt;/sub&gt;&lt;/em&gt;, the set of values of &lt;em&gt;X&lt;sub&gt;*&lt;/sub&gt;&lt;/em&gt;, or the value of the goal function&lt;em&gt;f&lt;sub&gt;*&lt;/sub&gt; = min f(x)&lt;/em&gt;. &lt;/p&gt;
 &lt;p&gt;For each specific task, the questions about the characteristics of the function that need to be taken into account when solving the problem depend on the properties of the function, as well as the availability of options for storing and processing information. For example, if the memory capacity of the computer is small, then in the process of solving high-dimensional problems it is not advisable to use algorithms that contain second-order derivatives, for undifferentiated functions can not use methods that require gradient calculation, etc.&lt;/p&gt;
 &lt;p&gt;Algorithms that use only information about the value of the minimization function are called &lt;em&gt;zero-order algorithms.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;b&gt;First- and second-order algorithms&lt;/b&gt; use information about the meanings of the first and second derivatives, respectively. Consider only first- and second-order algorithms or their modifications. To minimize the function of many variables, we will use sequential algorithms, when the choice of the next approximation depends on the previous results.&lt;/p&gt;
 &lt;p&gt;In this case, we will use the algorithms of the form&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;x&lt;sub&gt;k+1&lt;/sub&gt;=x&lt;sub&gt;k&lt;/sub&gt;+a&lt;sub&gt;k&lt;/sub&gt;*h&lt;sub&gt;k&lt;/sub&gt;,&amp;nbsp;&amp;nbsp;&amp;nbsp;де a&lt;sub&gt;k&lt;/sub&gt;∈R&lt;sup&gt;n&lt;/sup&gt;,&amp;nbsp;&amp;nbsp;&amp;nbsp;k=0,1,2…&lt;/em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;(2)&lt;/p&gt;</value>
+&lt;p&gt;&lt;em&gt;x&lt;sub&gt;k+1&lt;/sub&gt;=x&lt;sub&gt;k&lt;/sub&gt;+a&lt;sub&gt;k&lt;/sub&gt;*h&lt;sub&gt;k&lt;/sub&gt;,&amp;nbsp;&amp;nbsp;&amp;nbsp;where a&lt;sub&gt;k&lt;/sub&gt;∈R&lt;sup&gt;n&lt;/sup&gt;,&amp;nbsp;&amp;nbsp;&amp;nbsp;k=0,1,2…&lt;/em&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;(2)&lt;/p&gt;
+&lt;p&gt;The specific algorithm is determined by specifying the initial approximation &lt;em&gt;x&lt;sub&gt;0&lt;/sub&gt;&lt;/em&gt;, the rule of choosing the direction &lt;em&gt;h&lt;sub&gt;k&lt;/sub&gt;&lt;/em&gt; and the numbers &lt;em&gt;h&lt;sub&gt;k&lt;/sub&gt;&lt;/em&gt; depending on the information obtained on the basis of previous calculations, as well as the rule of stop conditions. The vector &lt;em&gt;h&lt;sub&gt;k&lt;/sub&gt;&lt;/em&gt; determines the direction (k + 1) of the step of the minimization method, and the coefficient &lt;em&gt;a&lt;sub&gt;k&lt;/sub&gt;&lt;/em&gt; determines the length of this step.&lt;/p&gt;
+&lt;p&gt;In practice, &lt;em&gt;a&lt;sub&gt;k&lt;/sub&gt;&gt;0&lt;/em&gt; is often chosen from the condition of ensuring monotonicity &lt;em&gt;f(x&lt;sub&gt;k+1&lt;/sub&gt;)&amp;lt;f(x&lt;sub&gt;k&lt;/sub&gt;)&lt;/em&gt;. In this case, set &lt;em&gt;a&lt;sub&gt;k&lt;/sub&gt;=a&lt;/em&gt; and check the monotonicity. If monotonicity is not satisfied, then a is crushed until this condition is met.&lt;/p&gt;
+&lt;p&gt;Among the methods of minimization can be divided into finite and infinite. Finite methods are those that guarantee finding the solution of the problem for a finite number of operations (steps, iterations). In this case, we believe that the calculations are performed accurately.&lt;/p&gt;
+&lt;p&gt;An important characteristic of infinite methods is the rate of convergence. Method (2) coincides if &lt;em&gt;ρ(x&lt;sub&gt;k&lt;/sub&gt;, x&lt;sub&gt;*&lt;/sub&gt;)→0 (k→∞)&lt;/em&gt;, where &lt;em&gt;x&lt;sub&gt;*&lt;/sub&gt;&lt;/em&gt; is the solution of problem (1). If &lt;em&gt;f(x&lt;sub&gt;k&lt;/sub&gt;)→f(x&lt;sub&gt;*&lt;/sub&gt;)&lt;/em&gt;, then sometimes it is also said that method (2) coincides in function.&lt;/p&gt;
+&lt;p&gt;In the case when the point &lt;em&gt;x&lt;sub&gt;*&lt;/sub&gt;&lt;/em&gt; is not unique, then under the convergence of the sequence &lt;em&gt;{x&lt;sub&gt;k&lt;/sub&gt;}&lt;/em&gt; means the convergence to the set  &lt;em&gt;X&lt;sub&gt;*&lt;/sub&gt;={x&lt;sub&gt;*&lt;/sub&gt;∈R&lt;sup&gt;n&lt;/sup&gt;:f(x&lt;sub&gt;*&lt;/sub&gt;)=min ⁡f(x) }, ρ(x&lt;sub&gt;k&lt;/sub&gt;, X&lt;sub&gt;*&lt;/sub&gt;)→0 (k→∞)&lt;/em&gt;. The effectiveness of the methods can be in a sense to characterize by the concept of convergence rate.&lt;/p&gt;</value>
   </data>
   <data name="general_provisions_content_title" xml:space="preserve">
     <value>General provisions</value>
@@ -140,5 +145,8 @@ f (x) → inf, x∈R&lt;sup&gt;n&lt;/sup&gt; (1). &lt;/p&gt;
   </data>
   <data name="main_content_title" xml:space="preserve">
     <value>Gradient methods</value>
+  </data>
+  <data name="page_title" xml:space="preserve">
+    <value>Home Page</value>
   </data>
 </root>

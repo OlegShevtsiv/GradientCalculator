@@ -144,19 +144,10 @@
   <data name="gradientDescend_nav_select_option" xml:space="preserve">
     <value>Gradient descend</value>
   </data>
-  <data name="gradientDescend_page_title" xml:space="preserve">
-    <value>Gradient descend</value>
-  </data>
-  <data name="homePage_page_title" xml:space="preserve">
-    <value>Home Page</value>
-  </data>
   <data name="methods_nav" xml:space="preserve">
     <value>Methods</value>
   </data>
   <data name="newton_nav_select_option" xml:space="preserve">
-    <value>Newton method</value>
-  </data>
-  <data name="newton_page_title" xml:space="preserve">
     <value>Newton method</value>
   </data>
   <data name="this_is_required_field" xml:space="preserve">

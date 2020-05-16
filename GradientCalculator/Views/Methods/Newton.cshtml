@@ -1,11 +1,16 @@
-﻿@inject IHtmlLocalizer<CommonResource> localizer
+﻿@model CalcEquationVM;
+@inject IViewLocalizer pageLocalizer;
 
 @{
-    ViewData["Title"] = localizer["newton_page_title"];
+    ViewData["Title"] = pageLocalizer["page_title"];
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.ActionName = "Newton";
 }
 
-<h1>Newton</h1>
+<h1>@pageLocalizer["main_title"]</h1>
 
-<partial name="_EquationForm.cshtml">
+<partial name="_EquationFormPartial.cshtml" model="Model.PostModel"/>
+
+@if (Model.CalculationResultModel != default)
+{
+    <partial name="_CalculationResultsPartial.cshtml" model="Model.CalculationResultModel"/>
+}

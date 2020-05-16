@@ -1,5 +1,5 @@
 ﻿@model EquationRequest;
-@inject IViewLocalizer _localizer;
+@inject IViewLocalizer pageLocalizer;
 
 <form asp-controller="Methods" asp-action="@ViewBag.ActionName" method="post">
     <div>
@@ -7,13 +7,13 @@
 
         <div>
             <label asp-for="Equation"></label><br />
-            <input asp-for="Equation" id="gradientMethod_equation_input_id" required/>
+            <input asp-for="Equation" id="gradientMethod_equation_input_id" required />
             <span id="input_equation_error_message" style="color:darkred"></span>
         </div>
 
         <div>
             <label asp-for="Accuracy"></label><br />
-            <input type="number" placeholder="0.0001" step="any" asp-for="Accuracy" required/>
+            <input type="number" placeholder="0.00001" step="any" asp-for="Accuracy" required />
             <span style="color:darkred" asp-validation-for="Accuracy"></span>
         </div>
 
@@ -29,9 +29,12 @@
                     </div>
                 }
             }
+
+
+
         </div>
     </div>
 
-    <button class="btn btn-success" id="equation_form_submit_button_id" type="submit">@_localizer["Calculate"]</button>
+    <button class="btn btn-success" id="equation_form_submit_button_id" type="submit">@pageLocalizer["Calculate"]</button>
 
 </form>

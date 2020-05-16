@@ -9,7 +9,7 @@ namespace GradientCalculator.Data.Sqlite
 {
     public class SqliteContext : DbContext
     {
-        public static readonly string SliteFileName = "GradientCalculatorStorage.db";
+        public static readonly string FileName = "GradientCalculatorStorage.db";
 
         public DbSet<ExceptionLog> ExceptionLogs { get; set; }
 
@@ -25,7 +25,7 @@ namespace GradientCalculator.Data.Sqlite
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite($"Filename={SqliteContext.SliteFileName}");
+            optionsBuilder.UseSqlite($"Filename={SqliteContext.FileName}");
         }
     }
 }

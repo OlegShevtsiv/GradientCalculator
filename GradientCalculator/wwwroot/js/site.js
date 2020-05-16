@@ -1,7 +1,7 @@
-﻿var input = document.getElementById('gradientMethod_equation_input_id');
+﻿var input =  document.getElementById('gradientMethod_equation_input_id');
 
 input.oninput = function () {
-    $.post(`/api/Methods/GetVariables?eq=${input.value}`,
+    $.post(`/api/Methods/GetVariables?eq=${encodeURIComponent(input.value)}`,
         function (response) {
             if (response) {
                 if (response.data) {

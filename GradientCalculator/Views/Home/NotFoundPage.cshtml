@@ -1,8 +1,9 @@
-﻿
+﻿@inject IViewLocalizer pageLocalizer;
+
 @{
-    ViewData["Title"] = "404 (resource not found)";
+    ViewData["Title"] = pageLocalizer["page_title"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Error 404! Resource not found!</h1>
+<h1>@pageLocalizer["error_message"]</h1>
 

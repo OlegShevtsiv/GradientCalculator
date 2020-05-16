@@ -1,8 +1,7 @@
-﻿@inject IHtmlLocalizer<CommonResource> commonLocalizer
-@inject IViewLocalizer pageLocalizer;
+﻿@inject IViewLocalizer pageLocalizer;
 
 @{
-    ViewData["Title"] = commonLocalizer["homePage_page_title"];
+    ViewData["Title"] = pageLocalizer["page_title"];
 }
 
 <h3><b>@pageLocalizer["main_content_title"]</b></h3>

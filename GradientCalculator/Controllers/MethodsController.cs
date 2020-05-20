@@ -53,19 +53,31 @@ namespace GradientCalculator.Controllers
             {
                 Equation equation = new Equation(req.Equation);
 
-                var result = GradientMethod.GradientDescent(equation, req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, out int iterationsAmount);
+                var result = GradientMethods.GradientMethods.GradientDescent(equation, req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, out int iterationsAmount);
 
-                var f_x = equation[result];
+                int acuracyAmountAfterComa = 0;
+
+                double accuracy = req.Accuracy;
+
+                while (accuracy < 1)
+                {
+                    accuracy *= 10;
+                    acuracyAmountAfterComa++;
+                }
+
+                var f_x = Math.Round(equation[result], acuracyAmountAfterComa);
+
+                ViewBag.IsMinimum = true;
 
                 model.CalculationResultModel = new EquationCalcResponse(equation.VariablesValues, f_x, iterationsAmount);
             }
             catch (LocalizedException exc)
             {
-                ViewBag.Error = exc.GetLocalizedMessage(Thread.CurrentThread.CurrentUICulture);
+                ViewBag.ErrorMessage = exc.GetLocalizedMessage(Thread.CurrentThread.CurrentUICulture);
             }
             catch (Exception exc)
             {
-                ViewBag.Error = _localizer["calculation_error"];
+                ViewBag.ErrorMessage = _localizer["calculation_error"];
             }
 
             return View(model);
@@ -101,19 +113,33 @@ namespace GradientCalculator.Controllers
             {
                 Equation equation = new Equation(req.Equation);
 
-                var result = GradientMethod.Newton(equation, req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, ref iterationsAmount);
+                bool? IsMinimum = null;
 
-                var f_x = equation[result];
+                var result = GradientMethods.GradientMethods.Newton(equation, req.ValuesOfVariables.ToDictionary(k => k.Key, v => v.Value ?? 0.0), req.Accuracy, ref iterationsAmount, out IsMinimum);
+
+                ViewBag.IsMinimum = IsMinimum;
+
+                int acuracyAmountAfterComa = 0;
+
+                double accuracy = req.Accuracy;
+
+                while (accuracy < 1)
+                {
+                    accuracy *= 10;
+                    acuracyAmountAfterComa++;
+                }
+
+                var f_x = Math.Round(equation[result], acuracyAmountAfterComa);
 
                 model.CalculationResultModel = new EquationCalcResponse(equation.VariablesValues, f_x, iterationsAmount);
             }
             catch (LocalizedException exc)
             {
-                ViewBag.Error = exc.GetLocalizedMessage(Thread.CurrentThread.CurrentUICulture);
+                ViewBag.ErrorMessage = exc.GetLocalizedMessage(Thread.CurrentThread.CurrentUICulture);
             }
             catch (Exception exc)
             {
-                ViewBag.Error = _localizer["calculation_error"];
+                ViewBag.ErrorMessage = _localizer["calculation_error"];
             }
 
             return View(model);

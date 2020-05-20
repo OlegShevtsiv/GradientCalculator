@@ -1,4 +1,5 @@
 ﻿@model CalcEquationVM;
+@inject IHtmlLocalizer<CommonResource> commonLocalizer
 @inject IViewLocalizer pageLocalizer;
 
 @{
@@ -6,11 +7,51 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@pageLocalizer["main_title"]</h1>
+<h1>
+    @pageLocalizer["main_title"]
+</h1>
 
-<partial name="_EquationFormPartial.cshtml" model="Model.PostModel"/>
 
-@if (Model.CalculationResultModel != default)
-{
-    <partial name="_CalculationResultsPartial.cshtml" model="Model.CalculationResultModel"/>
-}
+<div>
+    <div>
+        <partial name="_EquationFormPartial.cshtml" model="Model.PostModel" />
+    </div>
+
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <span style="color:darkred">@ViewBag.ErrorMessage</span>
+    }
+
+    <div>
+        @if (Model.CalculationResultModel != default)
+        {
+            <partial name="_CalculationResultsPartial.cshtml" model="Model.CalculationResultModel" />
+        }
+    </div>
+
+    <div>
+
+        <div>
+            <h3>
+                @pageLocalizer["algorithm_title"]
+            </h3>
+
+            <p>
+                @Html.Raw(pageLocalizer["main_theory_text"].Value)
+            </p>
+        </div>
+
+
+        <div>
+            <h3>
+                @pageLocalizer["block_schema_title"]
+            </h3>
+
+            <img src="~/img/block-schemas/Newton_@(commonLocalizer["two_latter_iso_code"]).png" />
+
+        </div>
+    </div>
+
+
+
+</div>

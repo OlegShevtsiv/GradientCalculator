@@ -8,20 +8,20 @@ namespace GradientCalculator.Models.Response
 
         public readonly double? FunctionValue;
 
-        public readonly int? IterationAmount;
+        public readonly int? IterationsAmount;
 
         public EquationCalcResponse()
         {
             this.ExtremumPoint = new List<GradientMethods.VarValue>();
             this.FunctionValue = null;
-            this.IterationAmount = null;
+            this.IterationsAmount = null;
         }
 
-        public EquationCalcResponse(List<GradientMethods.VarValue> extremumPoint, double functionValue, int iterationAmount)
+        public EquationCalcResponse(List<GradientMethods.VarValue> extremumPoint, double functionValue, int iterationsAmount)
         {
             this.ExtremumPoint = extremumPoint;
             this.FunctionValue = functionValue;
-            this.IterationAmount = iterationAmount;
+            this.IterationsAmount = iterationsAmount;
         }
     }
 }

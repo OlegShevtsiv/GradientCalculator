@@ -117,46 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="2DPlot_nav" xml:space="preserve">
-    <value>2D Grapher</value>
+  <data name="finded_extremum_maximum_point" xml:space="preserve">
+    <value>Знайдена точка максимуму</value>
   </data>
-  <data name="Accuracy" xml:space="preserve">
-    <value>Accuracy</value>
+  <data name="finded_extremum_minimum_point" xml:space="preserve">
+    <value>Знайдена точка мінімуму</value>
   </data>
-  <data name="calculation_error" xml:space="preserve">
-    <value>Сalculation error!</value>
+  <data name="finded_extremum_point" xml:space="preserve">
+    <value>Знайдена точка екстремуму</value>
   </data>
-  <data name="cratedBy_footer" xml:space="preserve">
-    <value>created by Oleg Shevtsiv</value>
+  <data name="function_value_in_that_point" xml:space="preserve">
+    <value>Значення функції у цій точці</value>
   </data>
-  <data name="current_lang" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="Equation" xml:space="preserve">
-    <value>Equation</value>
-  </data>
-  <data name="equation_is_not_valid" xml:space="preserve">
-    <value>Equation is not valid!</value>
-  </data>
-  <data name="error_invalid_accuracy" xml:space="preserve">
-    <value>Accuracy is not valid! It has to be bigger than 0 and less than 0.1!</value>
-  </data>
-  <data name="gradientDescend_nav_select_option" xml:space="preserve">
-    <value>Gradient descend</value>
-  </data>
-  <data name="methods_nav" xml:space="preserve">
-    <value>Methods</value>
-  </data>
-  <data name="newton_nav_select_option" xml:space="preserve">
-    <value>Newton method</value>
-  </data>
-  <data name="ordinary_calculator_nav" xml:space="preserve">
-    <value>Calculator</value>
-  </data>
-  <data name="this_is_required_field" xml:space="preserve">
-    <value>This is required field!</value>
-  </data>
-  <data name="two_latter_iso_code" xml:space="preserve">
-    <value>en</value>
+  <data name="iterations_amount" xml:space="preserve">
+    <value>Кількість ітерацій</value>
   </data>
 </root>

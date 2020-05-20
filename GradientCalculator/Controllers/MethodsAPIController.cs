@@ -33,9 +33,20 @@ namespace GradientCalculator.Controllers
             {
                 Equation equation = new Equation(eq);
 
-                Random valueGenerator = new Random();
+                //Random valueGenerator = new Random();
 
-                _ = equation[equation.VariablesValues.Select(v => new KeyValuePair<int, double>(key: v.Index, valueGenerator.NextDouble())).ToList()];
+                //var result1 = equation[equation.VariablesValues.Select(v => new KeyValuePair<int, double>(key: v.Index, valueGenerator.NextDouble())).ToList()];
+
+                //var result2 = equation[equation.VariablesValues.Select(v => new KeyValuePair<int, double>(key: v.Index, -valueGenerator.NextDouble())).ToList()];
+
+                //var result3 = equation[equation.VariablesValues.Select(v => new KeyValuePair<int, double>(key: v.Index, 0.0)).ToList()];
+
+                //if (double.IsNaN(result1) || double.IsInfinity(result1) ||
+                //    double.IsNaN(result2) || double.IsInfinity(result2) ||
+                //    double.IsNaN(result3) || double.IsInfinity(result3)   ) 
+                //{
+                //    return new WebScriptResponseResult(_localizer["calculation_error"]);
+                //}
 
                 return new WebScriptResponseResult(equation.VariablesValues.OrderBy(v => v.Index).Select(v => new { index = v.Index, name = v.Name }).ToList());
             }

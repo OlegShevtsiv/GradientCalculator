@@ -1,22 +1,22 @@
-﻿@model EquationRequest;
+﻿@model MathExpressionRequest;
 @inject IViewLocalizer pageLocalizer;
-    
-<form asp-controller="Methods" asp-action="@ViewBag.ActionName" method="post">
+
+@{
+    ViewData["Title"] = pageLocalizer["page_title"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-controller="Home" asp-action="Calculate" method="post">
+
     <div>
         <div class="invalid-feedback" asp-validation-summary="ModelOnly"></div>
 
-        <partial name="_InstructionPartial.cshtml"/>
+        <partial name="../Methods/_InstructionPartial.cshtml" />
 
         <div>
             <label asp-for="Equation"></label><br />
             <input asp-for="Equation" id="gradientMethod_equation_input_id" required />
             <span id="input_equation_error_message" style="color:darkred"></span>
-        </div>
-
-        <div>
-            <label asp-for="Accuracy"></label><br />
-            <input type="number" placeholder="0.00001" step="any" asp-for="Accuracy" required />
-            <span style="color:darkred" asp-validation-for="Accuracy"></span>
         </div>
 
         <div id="values_of_variables_list_id">
@@ -36,3 +36,17 @@
 
     <button class="btn btn-success" id="equation_form_submit_button_id" type="submit">@pageLocalizer["Calculate"]</button>
 </form>
+
+<div>
+    @if (ViewBag.Result != null)
+    {
+        <p>@pageLocalizer["calculation_result"]: @ViewBag.Result</p>
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <span style="color:darkred">@ViewBag.ErrorMessage</span>
+    }
+
+</div>
+

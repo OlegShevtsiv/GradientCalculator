@@ -1,5 +1,4 @@
 ﻿using GradientMethods.ExceptionResult;
-using ImageController;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,9 +16,9 @@ namespace GradientMethods
         {
             try
             {
-                //Equation eq = new Equation("0.1 * (x1 - x2 ^ 2)^2 +( 1.5 - x2 ^ 2) ^ 2");
+                Equation eq = new Equation("0.1 * (x1 - x2 ^ 2)^2 +( 1.5 - x2 ^ 2) ^ 2");
                 //Equation eq = new Equation("(x1 + 10 * x2)^2 + 5*(x3 - x4)^2 + (x2 - 2*x3)^4 + 10*(x1-x4)^2");
-                Equation eq = new Equation("(x2-x1^2)^2 + 2*(1-x1)^2");
+                //Equation eq = new Equation("(x2-x1^2)^2 + 2*(1-x1)^2");
 
                 //Equation eq = new Equation("(x1^2 + x2-11)^2 + (x1+x2^2 -7)^2");
 
@@ -52,7 +51,7 @@ namespace GradientMethods
 
                     //Console.WriteLine("Gradient Descent Method: ");
                     iterAmount = 0;
-                    var GDResult = GradientMethod.Newton(eq, inputVars, eps, ref iterAmount);
+                    var GDResult = GradientMethods.Newton(eq, inputVars, eps, ref iterAmount, out _);
 
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.BackgroundColor = ConsoleColor.DarkRed;

@@ -9,11 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> @*4.3.1*@
+
+    @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">*@
     <link rel="stylesheet" href="~/css/site.css" />
-
-
 
 </head>
 <body>
@@ -29,9 +28,15 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="OrdinaryCalculator">
+                                @localizer["ordinary_calculator_nav"]
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <div class="dropdown">
                                 <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @localizer["methods_nav"] 
+                                    @localizer["methods_nav"]
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" asp-controller="Methods" asp-action="GradientDescend">

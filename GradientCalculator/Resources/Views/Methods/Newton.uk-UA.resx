@@ -117,6 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="algorithm_title" xml:space="preserve">
+    <value>Алгоритм</value>
+  </data>
+  <data name="block_schema_title" xml:space="preserve">
+    <value>Блок-схема</value>
+  </data>
+  <data name="main_theory_text" xml:space="preserve">
+    <value>&lt;p&gt;Процес відшукання точки мінімуму функції  F  полягає в наступному: на початку вибираємо деяку початкову точку &lt;em&gt;M&lt;sub&gt;0&lt;/sub&gt;(x&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;,x&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;)&lt;/em&gt; і обчислюємо в ній градієнт та частинні похідні другого порядку (матрицю Гессе) функції F. Далі робимо крок у антиградієнтному напрямку за формулою:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;x&lt;sup&gt;1&lt;/sup&gt;=x&lt;sup&gt;0&lt;/sup&gt;-H&lt;sup&gt;-1&lt;/sup&gt;(M&lt;sub&gt;0&lt;/sub&gt;)*grad f(M&lt;sub&gt;0&lt;/sub&gt;)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;(де &lt;em&gt;H&lt;sup&gt;-1&lt;sup&gt;&lt;/em&gt; - обернена матриця Гессе).&lt;/p&gt;
+&lt;p&gt;У результаті отримуємо нову точку &lt;em&gt;M&lt;sup&gt;1&lt;/sup&gt;(x&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;,x&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;)&lt;/em&gt;, значення функції в якій буде менше  за значення функції в точці &lt;em&gt;M&lt;sub&gt;0&lt;/sub&gt;&lt;/em&gt;. Якщо &lt;em&gt;|gradf(M&lt;sub&gt;1&lt;/sub&gt;)|=0&lt;/em&gt;, тоді &lt;em&gt;M&lt;sub&gt;1&lt;/sub&gt;&lt;/em&gt; є шуканою точкою мінімуму, інакше — у новій точці обчислюємо градієнт та частинні похідні другого порядку і знову робимо крок у зворотному до нього напрямку&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;x&lt;sup&gt;2&lt;/sup&gt;=x&lt;sup&gt;1&lt;/sup&gt;-H&lt;sup&gt;-1&lt;/sup&gt;(M&lt;sub&gt;1&lt;/sub&gt;)*grad f(M&lt;sub&gt;1&lt;/sub&gt;)&lt;/em&gt;&lt;/p&gt;</value>
+  </data>
   <data name="main_title" xml:space="preserve">
     <value>Метод Ньютона</value>
   </data>

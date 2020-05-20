@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="algorithm_title" xml:space="preserve">
+    <value>Алгоритм</value>
+  </data>
+  <data name="block_schema_title" xml:space="preserve">
+    <value>Блок-схема</value>
+  </data>
+  <data name="main_theory_text" xml:space="preserve">
+    <value>&lt;p&gt;Нехай цільова функція задана у виді: &lt;em&gt;F= f(x&lt;sub&gt;1&lt;/sub&gt;,x&lt;sub&gt;2&lt;/sub&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;)&lt;/em&gt;, і дана функція має безупинні частинні похідні по кожній із змінної:&lt;/p&gt;
+&lt;p&gt; &lt;em&gt;grad f={∂f/∂x&lt;sub&gt;1&lt;/sub&gt;,∂f/∂x&lt;sub&gt;2&lt;/sub&gt;,…,∂f/∂x&lt;sub&gt;n&lt;/sub&gt;}&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Далі, обираємо &lt;em&gt;h&lt;sub&gt;k&lt;/sub&gt;=-f'(x&lt;sub&gt;k&lt;/sub&gt;)&lt;/em&gt;, Отже послідовність &lt;em&gt;{x&lt;sub&gt;k&lt;/sub&gt;}&lt;/em&gt; визначається з формули&lt;/p&gt;
+ &lt;p&gt;&lt;em&gt;x&lt;sub&gt;(k+1)&lt;/sub&gt;=x&lt;sub&gt;k&lt;/sub&gt;-a&lt;sub&gt;k&lt;/sub&gt; f'(x&lt;sub&gt;k&lt;/sub&gt;) ,&amp;nbsp;&amp;nbsp;&amp;nbsp;де a&lt;sub&gt;k&lt;/sub&gt; &amp;#62; 0,&amp;nbsp;&amp;nbsp;&amp;nbsp;k=0,1,2…&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;(3) &lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Процес відшукання точки мінімуму функції  F  полягає в наступному: на початку вибираємо деяку початкову точку &lt;em&gt;M&lt;sub&gt;0&lt;/sub&gt;(x&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;,x&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;)&lt;/em&gt; і обчислюємо в ній градієнт функції F . Далі, використавши формулу (3), робимо крок у антиградієнтному напрямку &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;x&lt;sup&gt;1&lt;/sup&gt;=x&lt;sup&gt;0&lt;/sup&gt;-a&lt;sup&gt;1&lt;/sup&gt; gradf(M&lt;sub&gt;0&lt;/sub&gt;) &amp;nbsp;&amp;nbsp;&amp;nbsp;(де a&lt;sup&gt;1&lt;/sup&gt;&amp;#62; 0)&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;У результаті отримуємо нову точку  &lt;em&gt;M&lt;sup&gt;1&lt;/sup&gt;(x&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;,x&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;)&lt;/em&gt;, значення функції в якій зазвичай менше  за значення функції в точці  &lt;em&gt;M&lt;sub&gt;0&lt;/sub&gt;&lt;/em&gt;. Якщо ця умова не виконується, тобто значення функції не змінилося або навіть зросла, то потрібно зменшити крок  &lt;em&gt;a&lt;sup&gt;1&lt;/sup&gt; (a&lt;sup&gt;2&lt;/sup&gt;=a&lt;sup&gt;1&lt;/sup&gt;/b,&amp;nbsp;&amp;nbsp;b&gt;1)&lt;/em&gt;, після чого, у новій точці обчислюємо градієнт і знову робимо крок у зворотному до нього напрямку&lt;/p&gt;
+ &lt;p&gt;&lt;em&gt;x&lt;sup&gt;2&lt;/sup&gt;=x&lt;sup&gt;1&lt;/sup&gt;-a&lt;sup&gt;2&lt;/sup&gt; gradf(M&lt;sub&gt;1&lt;/sub&gt;)&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Якщо  &lt;em&gt;а=const&lt;/em&gt; і не змінюється на кожній ітерації, то величина кроку буде пропорційна величині градіенту.&lt;/p&gt;
+&lt;p&gt;Процес продовжується до отримання найменшого значення цільової функції. Строго кажучи, момент закінчення пошуку настане тоді, коли рух з отриманої точки, при виборі будь-якого кроку, призводить до зростання значення цільової функції. Якщо мінімум функції досягається всередині розглядуваної області, то в цій точці градієнт дорівнює нулю, що також може служити сигналом про закінчення процесу оптимізації.&lt;/p&gt;</value>
+  </data>
   <data name="main_title" xml:space="preserve">
     <value>Метод градієнтного спуску</value>
   </data>

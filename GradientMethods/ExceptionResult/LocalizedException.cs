@@ -105,7 +105,10 @@ namespace GradientMethods.ExceptionResult
                     { "incorect_input_list_of_variable_values", "Incorrect input list of variable values!" },
                     { "calculation_error", "Сalculation error!" },
                     { "constant_not_found", "Сonstant not found!" },
-                    { "dividing_by_zero", "Error! Dividing by zero is not allowed!" }
+                    { "dividing_by_zero", "Error! Dividing by zero is not allowed!" },
+                    { "extremum_not_found", "Extremum not found." },
+                    { "matrix_has_to_be_square", "Matrix has to be square!" }
+
                 }
             },
 
@@ -125,7 +128,10 @@ namespace GradientMethods.ExceptionResult
                     { "incorect_input_list_of_variable_values", "Вхідні значення змінних некоректні!" },
                     { "calculation_error", "Помилка обчислень!" },
                     { "constant_not_found", "Константа не знайдена!" },
-                    { "dividing_by_zero", "Помилка! Ділення на нуль не дозволене!" }
+                    { "dividing_by_zero", "Помилка! Ділення на нуль не дозволене!" },
+                    { "extremum_not_found", "Точка екстремуму не знайдена." },
+                    { "matrix_has_to_be_square", "Матриця повинна бути квадратна!" }
+
                 }
             }
         };

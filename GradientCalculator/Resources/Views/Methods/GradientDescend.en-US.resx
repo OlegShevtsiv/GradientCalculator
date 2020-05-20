@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="algorithm_title" xml:space="preserve">
+    <value>Algorithm</value>
+  </data>
+  <data name="block_schema_title" xml:space="preserve">
+    <value>Block schema</value>
+  </data>
+  <data name="main_theory_text" xml:space="preserve">
+    <value>&lt;p&gt;Let the objective function be given in the form: &lt;em&gt;F= f(x&lt;sub&gt;1&lt;/sub&gt;,x&lt;sub&gt;2&lt;/sub&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;)&lt;/em&gt;, and this function has continuous partial derivatives for each of the variables: &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;grad f={∂f/∂x&lt;sub&gt;1&lt;/sub&gt;,∂f/∂x&lt;sub&gt;2&lt;/sub&gt;,…,∂f/∂x&lt;sub&gt;n&lt;/sub&gt;}&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Next, we choose &lt;em&gt;h&lt;sub&gt;k&lt;/sub&gt;=-f'(x&lt;sub&gt;k&lt;/sub&gt;)&lt;/em&gt;, so the sequence &lt;em&gt;{x&lt;sub&gt;k&lt;/sub&gt;}&lt;/em&gt; is determined from the formula&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;x&lt;sub&gt;(k+1)&lt;/sub&gt;=x&lt;sub&gt;k&lt;/sub&gt;-a&lt;sub&gt;k&lt;/sub&gt; f'(x&lt;sub&gt;k&lt;/sub&gt;) ,&amp;nbsp;&amp;nbsp;&amp;nbsp;де a&lt;sub&gt;k&lt;/sub&gt; &amp;#62; 0,&amp;nbsp;&amp;nbsp;&amp;nbsp;k=0,1,2…&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;(3) &lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;The process of finding the minimum point of the function F is as follows: at the beginning we choose some starting point &lt;em&gt;M&lt;sub&gt;0&lt;/sub&gt;(x&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;,x&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;&lt;sup&gt;(0)&lt;/sup&gt;)&lt;/em&gt; and calculate the gradient of the function F in it. Next, using formula (3), we take a step in the anti-gradient direction &lt;/p&gt;
+&lt;p&gt;&lt;em&gt;x&lt;sup&gt;1&lt;/sup&gt;=x&lt;sup&gt;0&lt;/sup&gt;-a&lt;sup&gt;1&lt;/sup&gt; gradf(M&lt;sub&gt;0&lt;/sub&gt;) &amp;nbsp;&amp;nbsp;&amp;nbsp;(де a&lt;sup&gt;1&lt;/sup&gt;&amp;#62;0)&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;As a result, we obtain a new point &lt;em&gt;M&lt;sup&gt;1&lt;/sup&gt; (x&lt;sub&gt;1&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;,x&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;,…,x&lt;sub&gt;n&lt;/sub&gt;&lt;sup&gt;(1)&lt;/sup&gt;)&lt;/em&gt;, the value of the function in which is usually less than the value of the function at point &lt;em&gt;M&lt;sub&gt;0&lt;/sub&gt;&lt;/em&gt;. If this condition is not met, ie the value of the function has not changed or even increased, you need to reduce the step &lt;em&gt;a&lt;sup&gt;1&lt;/sup&gt; (a&lt;sup&gt;2&lt;/sup&gt;=a&lt;sup&gt;1&lt;/sup&gt;/b,&amp;nbsp;&amp;nbsp;b&gt;1)&lt;/em&gt;, then, at a new point, calculate the gradient and again take a step in the opposite direction.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;x&lt;sup&gt;2&lt;/sup&gt;=x&lt;sup&gt;1&lt;/sup&gt;-a&lt;sup&gt;2&lt;/sup&gt; gradf(M&lt;sub&gt;1&lt;/sub&gt;)&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;If &lt;em&gt;а=const&lt;/em&gt; and does not change at each iteration, then the step size will be proportional to the value of the gradient.&lt;/p&gt;
+&lt;p&gt;The process continues until the smallest value of the objective function. Strictly speaking, the end of the search will occur when the movement from the received point, when selecting any step, leads to an increase in the value of the objective function. If the minimum of the function is reached within the considered area, then at this point the gradient is zero, which can also serve as a signal of the end of the optimization process.&lt;/p&gt;</value>
+  </data>
   <data name="main_title" xml:space="preserve">
     <value>Gradient descend method</value>
   </data>

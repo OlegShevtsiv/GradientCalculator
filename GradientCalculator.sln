@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradientCalculator", "Gradi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradientMethods", "GradientMethods\GradientMethods.csproj", "{2A31EE8D-0DB1-4E21-8448-3A98C3B0CF77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageManager", "ImageManager\ImageManager.csproj", "{505CA623-D410-4794-B133-F700C7949821}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{2A31EE8D-0DB1-4E21-8448-3A98C3B0CF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A31EE8D-0DB1-4E21-8448-3A98C3B0CF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A31EE8D-0DB1-4E21-8448-3A98C3B0CF77}.Release|Any CPU.Build.0 = Release|Any CPU
-		{505CA623-D410-4794-B133-F700C7949821}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{505CA623-D410-4794-B133-F700C7949821}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{505CA623-D410-4794-B133-F700C7949821}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{505CA623-D410-4794-B133-F700C7949821}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

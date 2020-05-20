@@ -150,6 +150,9 @@
   <data name="newton_nav_select_option" xml:space="preserve">
     <value>Метод Ньютона</value>
   </data>
+  <data name="ordinary_calculator_nav" xml:space="preserve">
+    <value>Калькулятор</value>
+  </data>
   <data name="this_is_required_field" xml:space="preserve">
     <value>Це поле обов'язкове!</value>
   </data>

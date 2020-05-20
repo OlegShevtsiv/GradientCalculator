@@ -281,7 +281,14 @@ namespace GradientMethods
                         operands.Push(first / second);
                         break;
                     case '^':
-                        operands.Push(Math.Pow(first, second));
+                        var result = Math.Pow(first, second);
+
+                        if (double.IsNaN(result) || double.IsInfinity(result)) 
+                        {
+                            throw new LocalizedException("calculation_error");
+                        }
+
+                        operands.Push(result);
                         break;
                 }
             }
@@ -391,6 +398,11 @@ namespace GradientMethods
                 }
 
                 double result = mathFunction(funcCalcEq.Calculate());
+
+                if (double.IsNaN(result) || double.IsInfinity(result))
+                {
+                    throw new LocalizedException("calculation_error");
+                }
 
                 equationPart = equationPart.Replace(partToReplace, result.ToString().Replace(',', '.'));
 
@@ -524,7 +536,12 @@ namespace GradientMethods
 
             if (eq.Contains("x"))
             {
-                for (int i = eq.IndexOf("x", StringComparison.InvariantCulture); i < eq.Length - 1; i++)
+                if (eq.Length == 1) 
+                {
+                    throw new LocalizedException("equation_not_valid_it_has_to_contains_variables_matching_pattern_X_(_number_0__9_)_");
+                }
+
+                for (int i = 0; i < eq.Length - 1; i++)
                 {
                     if (eq[i] == 'x')
                     {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GradientMethods
 {
-    public partial class GradientMethod
+    public static partial class GradientMethods
     {
         /// <summary>
         /// Method of finding a partial derivative
@@ -14,7 +14,7 @@ namespace GradientMethods
         /// <param name="valuesOfVariables"></param>
         /// <param name="variableIndex"></param>
         /// <returns></returns>
-        static double df(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables, int variableIndex)
+        static double df(this Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables, int variableIndex)
         {
             if (function == null)
             {
@@ -36,6 +36,11 @@ namespace GradientMethods
 
             X_h[variableIndex] += step;
 
+            if (X_h[variableIndex] == valuesOfVariables.First(k => k.Key == variableIndex).Value)
+            {
+                throw new LocalizedException("extremum_not_found");
+            }
+
             return (function[X_h] - function[valuesOfVariables]) / step;
         }
 
@@ -45,9 +50,9 @@ namespace GradientMethods
         /// <param name="function"></param>
         /// <param name="valuesOfVariables"></param>
         /// <returns></returns>
-        static IEnumerable<KeyValuePair<int, double>> Gradient(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables)
+        static IEnumerable<KeyValuePair<int, double>> GetGradient(this Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables)
         {
-            if (function == null) 
+            if (function == null)
             {
                 throw new ArgumentNullException(nameof(function));
             }
@@ -64,13 +69,13 @@ namespace GradientMethods
 
             foreach (var x in valuesOfVariables)
             {
-                gradient.Add(x.Key, df(function, valuesOfVariables, x.Key));
+                gradient.Add(x.Key, function.df(valuesOfVariables, x.Key));
             }
 
             return gradient;
         }
 
-        static List<List<double>> GetInvertibleMatrix(List<List<double>> matrix)
+        static List<List<double>> GetInvertible(this List<List<double>> matrix)
         {
             if (matrix == null)
             {
@@ -86,7 +91,7 @@ namespace GradientMethods
             }
 
             int n = matrix.Count;
-            List<double> Koef = GetKoef(matrix);
+            List<double> Koef = matrix.GetKoef();
             List<List<double>> E = new List<List<double>>(GetUnitMatrix(n));
             List<List<double>> OA = new List<List<double>>();
             for (int i = 0; i < n; i++)
@@ -116,10 +121,10 @@ namespace GradientMethods
                         }
                     }
                 }
-                A1 = MultiplyMatrixes(A1, matrix);
+                A1 = Multiply(A1, matrix);
             }
 
-            List<List<double>> CheckResultMutrix = MultiplyMatrixes(OA, matrix);
+            List<List<double>> CheckResultMutrix = Multiply(OA, matrix);
             bool isCorrect = true;
             for (int i = 0; i < n; i++)
             {
@@ -159,7 +164,7 @@ namespace GradientMethods
             List<List<double>> unit_matrix = new List<List<double>>();
             for (int i = 0; i < size; i++)
             {
-                unit_matrix.Add(UnitVector(size, i));
+                unit_matrix.Add(GetUnitVector(size, i));
             }
             return unit_matrix;
         }
@@ -170,7 +175,7 @@ namespace GradientMethods
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        static List<double> GetKoef(List<List<double>> matrix)
+        static List<double> GetKoef(this List<List<double>> matrix)
         {
             if (matrix == null)
             {
@@ -189,7 +194,7 @@ namespace GradientMethods
                 S = 0.0d;
                 if (k > 0)
                 {
-                    AA = MultiplyMatrixes(AA, matrix);
+                    AA = Multiply(AA, matrix);
                 }
                 for (int i = 0; i < n; i++)
                 {
@@ -211,7 +216,13 @@ namespace GradientMethods
             return Koef;
         }
 
-        static List<List<double>> MultiplyMatrixes(List<List<double>> matrix_A, List<List<double>> matrix_B)
+        /// <summary>
+        /// Multiplies two matrixes
+        /// </summary>
+        /// <param name="matrix_A"></param>
+        /// <param name="matrix_B"></param>
+        /// <returns></returns>
+        static List<List<double>> Multiply(this List<List<double>> matrix_A, List<List<double>> matrix_B)
         {
             if (matrix_A == null)
             {
@@ -254,7 +265,7 @@ namespace GradientMethods
 
 
 
-        static double MultiplyVectors(List<double> vector_A, List<double> vector_B)
+        static double Multiply(this List<double> vector_A, List<double> vector_B)
         {
             if (vector_A == null || vector_B == null)
             {
@@ -273,7 +284,7 @@ namespace GradientMethods
             return Sum;
         }
 
-        static List<double> SumVectors(List<double> vactor_A, List<double> vector_B)
+        static List<double> Sum(this List<double> vactor_A, List<double> vector_B)
         {
             if (vactor_A == null || vector_B == null)
             {
@@ -292,7 +303,7 @@ namespace GradientMethods
         }
 
 
-        static List<double> SubtractVectors(List<double> vactor_A, List<double> vector_B)
+        static List<double> Subtract(this List<double> vactor_A, List<double> vector_B)
         {
             if (vactor_A == null || vector_B == null)
             {
@@ -316,7 +327,7 @@ namespace GradientMethods
         /// <param name="vector"></param>
         /// <param name="number"></param>
         /// <returns></returns>
-        static List<double> MultiplyVectorOnValue(List<double> vector, double number) // 
+        static List<double> MultiplyOnValue(this List<double> vector, double number) // 
         {
             if (vector == null)
             {
@@ -335,7 +346,7 @@ namespace GradientMethods
         /// <param name="sizeOfVector"></param>
         /// <param name="index"></param>
         /// <returns></returns>
-        static List<double> UnitVector(int sizeOfVector, int index)
+        static List<double> GetUnitVector(int sizeOfVector, int index)
         {
             List<double> unit_vector = new List<double>();
             for (int i = 0; i < sizeOfVector; i++)
@@ -358,7 +369,7 @@ namespace GradientMethods
         /// <param name="function"></param>
         /// <param name="valuesOfVariables"></param>
         /// <returns></returns>
-        static List<List<double>> Hessian(Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables) 
+        static List<List<double>> GetHessian(this Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables)
         {
             if (function == null)
             {
@@ -395,11 +406,18 @@ namespace GradientMethods
             for (int i = 0; i < valuesOfVariables.Count(); i++)
             {
                 index = 0;
-                tempList = SumVectors(values, MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count(), i), step));
+                tempList = Sum(values, GetUnitVector(valuesOfVariables.Count(), i)
+                                       .MultiplyOnValue(step));
+
                 fPlus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<int, double>(key: x.Key, value: tempList[index++])).ToList()]);
 
+
+
+
                 index = 0;
-                tempList = SubtractVectors(values, MultiplyVectorOnValue(UnitVector(valuesOfVariables.Count(), i), step));
+                tempList = Subtract(values, GetUnitVector(valuesOfVariables.Count(), i)
+                                            .MultiplyOnValue(step));
+
                 fMinus.Add(function[valuesOfVariables.Select(x => new KeyValuePair<int, double>(key: x.Key, value: tempList[index++])).ToList()]);
                 hessian[i][i] = (fPlus[i] - 2 * curFValue + fMinus[i]) / (step * step);
             }
@@ -409,7 +427,13 @@ namespace GradientMethods
                 for (int j = i + 1; j < valuesOfVariables.Count(); j++)
                 {
                     index = 0;
-                    tempList = SumVectors(values, MultiplyVectorOnValue(SumVectors(UnitVector(valuesOfVariables.Count(), i), UnitVector(valuesOfVariables.Count(), j)), step));
+
+
+
+                    tempList = values.Sum(GetUnitVector(valuesOfVariables.Count(), i)
+                                           .Sum(GetUnitVector(valuesOfVariables.Count(), j))
+                                           .MultiplyOnValue(step));
+
                     double x = function[valuesOfVariables.Select(x1 => new KeyValuePair<int, double>(key: x1.Key, value: tempList[index++])).ToList()];
                     hessian[i][j] = (x - fPlus[i] - fPlus[j] + curFValue) / (step * step);
                 }
@@ -423,6 +447,174 @@ namespace GradientMethods
                 }
             }
             return hessian;
+        }
+
+        static double GetDeterminant(this List<List<double>> matrix) 
+        {
+            if (matrix == null || matrix.Count == 0 || matrix.First().Count == 0) 
+            {
+                throw new ArgumentException(nameof(matrix));
+            }
+
+            if (matrix.Count > 0 && matrix.All(m => m.Count != matrix.Count)) 
+            {
+                throw new LocalizedException("matrix_has_to_be_square");
+            }
+
+            if (matrix.Count == 1 && matrix.First().Count == 1) 
+            {
+                return matrix.First().First();
+            }
+
+            if (matrix.Count == 2)
+            {
+                return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+            }
+            double result = 0;
+            for (var j = 0; j < matrix.Count; j++)
+            {
+                result += (j % 2 == 1 ? 1 : -1) * matrix[1][j] *
+                    GetDeterminant(matrix.CutColumn(j).
+                    CutRow(1));
+            }
+            return result;
+        }
+
+        static List<List<double>> CutColumn(this List<List<double>> matrix, int columnIndex)
+        {
+            if (columnIndex < 0 || columnIndex >= matrix.Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            List<List<double>> result = new List<List<double>>();
+
+            for (int i = 0; i < matrix.Count; i++)
+            {
+                result.Add(new List<double>());
+                for (int j = 0; j < matrix.Count; j++)
+                {
+                    if (j == columnIndex) 
+                    {
+                        continue;
+                    }
+                    result[i].Add(matrix[i][j]);
+                }
+            }
+
+            return result;
+        }
+
+
+        static List<List<double>> CutRow(this List<List<double>> matrix, int rowIndex)
+        {
+            if (rowIndex < 0 || rowIndex >= matrix.Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            List<List<double>> result = new List<List<double>>();
+
+            for (int i = 0; i < matrix.Count; i++) 
+            {
+                if (i == rowIndex) 
+                {
+                    continue;
+                }
+
+                result.Add(matrix[i]);
+            }
+
+            return result;
+        }
+
+        static List<List<double>> GetMinor(this List<List<double>> matrix, int minorOrder)
+        {
+            if (matrix == null || matrix.Count == 0 || matrix.First().Count == 0)
+            {
+                throw new ArgumentException(nameof(matrix));
+            }
+
+            if (matrix.Count > 0 && matrix.All(m => m.Count != matrix.Count))
+            {
+                throw new LocalizedException("matrix_has_to_be_square");
+            }
+
+            if (matrix.Count == 1 && matrix.First().Count == 1)
+            {
+                return matrix;
+            }
+
+            if (minorOrder < 0 || minorOrder >= matrix.Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
+
+            List<List<double>> result = new List<List<double>>();
+
+            for (int i = 0; i <= minorOrder; i++)
+            {
+                result.Add(new List<double>());
+                for (int j = 0; j <= minorOrder; j ++)
+                {
+                    result[i].Add(matrix[i][j]);
+                }
+            }
+
+            return result;
+        }
+
+        static bool? CheckIsMinimum(this Equation function, IEnumerable<KeyValuePair<int, double>> valuesOfVariables) 
+        {
+            if (function.VariablesValues.Count > 1)
+            {
+                var hessian = function.GetHessian(valuesOfVariables);
+
+                List<double> minorsDeterminants = new List<double>();
+
+                for (int i = 0; i < valuesOfVariables.Count(); i++)
+                {
+                    minorsDeterminants.Add(hessian.GetMinor(i).GetDeterminant());
+                }
+
+                int index = 1;
+                if (minorsDeterminants.All(md => md > 0.0))
+                {
+                    return true;
+                }
+                else if (minorsDeterminants.All(md => (md * Math.Pow(-1, index++)) > 0.0))
+                {
+                    return false;
+                }
+                else if (minorsDeterminants.All(md => md == 0.0))
+                {
+                    return null;
+                }
+                else
+                {
+                    throw new LocalizedException("extremum_not_found");
+                }
+            }
+            else if (function.VariablesValues.Count == 1)
+            {
+                var tempMinusVars = valuesOfVariables.Select(v => new KeyValuePair<int, double>(v.Key, v.Value - 0.1)).ToList();
+                var tempPlusVars = valuesOfVariables.Select(v => new KeyValuePair<int, double>(v.Key, v.Value + 0.1)).ToList();
+
+                if (function.GetGradient(tempMinusVars).First().Value > 0 && function.GetGradient(tempPlusVars).First().Value < 0)
+                {
+                    return false;
+                }
+                else if (function.GetGradient(tempMinusVars).First().Value < 0 && function.GetGradient(tempPlusVars).First().Value > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new LocalizedException("extremum_not_found");
+                }
+            }
+
+            return null;
         }
     }
 }

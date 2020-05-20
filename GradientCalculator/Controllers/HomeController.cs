@@ -13,6 +13,8 @@ using GradientCalculator.Models.Request;
 using GradientMethods;
 using GradientMethods.ExceptionResult;
 using Microsoft.Extensions.Localization;
+using GradientCalculator.Services.ResponseRequestLoggerService.Models;
+using GradientCalculator.Services.ResponseRequestLoggerService;
 
 namespace GradientCalculator.Controllers
 {
@@ -21,11 +23,14 @@ namespace GradientCalculator.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStringLocalizer<CommonResource> _localizer;
+        private readonly RespReqLoggerService _respReqLoggerService;
 
-        public HomeController(ILogger<HomeController> logger, IStringLocalizer<CommonResource> localizer)
+
+        public HomeController(ILogger<HomeController> logger, IStringLocalizer<CommonResource> localizer, RespReqLoggerService respReqLoggerService)
         {
             _logger = logger;
             this._localizer = localizer;
+            this._respReqLoggerService = respReqLoggerService;
         }
 
         public IActionResult Index()
@@ -70,6 +75,13 @@ namespace GradientCalculator.Controllers
             {
                 ViewBag.ErrorMessage = _localizer["calculation_error"];
             }
+
+            this._respReqLoggerService.AddNewResponseRequestLog(new ResponseRequestLog(HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value,
+                                                                                       ViewBag.Result,
+                                                                                       expresiion)
+                                                                                        {
+                                                                                            ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
+            });
 
             return View(nameof(this.OrdinaryCalculator), expresiion);
         }

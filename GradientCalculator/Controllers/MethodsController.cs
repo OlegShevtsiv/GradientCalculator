@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using GradientCalculator.Middlewares.Filters;
 using GradientCalculator.Models.Request;
 using GradientCalculator.Models.Response;
+using GradientCalculator.Services.ResponseRequestLoggerService;
+using GradientCalculator.Services.ResponseRequestLoggerService.Models;
 using GradientCalculator.ViewModels;
 using GradientMethods;
 using GradientMethods.ExceptionResult;
@@ -21,9 +23,12 @@ namespace GradientCalculator.Controllers
     {
         private readonly IStringLocalizer<CommonResource> _localizer;
 
-        public MethodsController(IStringLocalizer<CommonResource> localizer)
+        private readonly RespReqLoggerService _respReqLoggerService;
+
+        public MethodsController(IStringLocalizer<CommonResource> localizer, RespReqLoggerService respReqLoggerService)
         {
             this._localizer = localizer;
+            this._respReqLoggerService = respReqLoggerService;
         }
 
         [HttpGet]
@@ -79,6 +84,14 @@ namespace GradientCalculator.Controllers
             {
                 ViewBag.ErrorMessage = _localizer["calculation_error"];
             }
+
+            this._respReqLoggerService.AddNewResponseRequestLog(new ResponseRequestLog(HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value,
+                                                                                       model.CalculationResultModel,
+                                                                                       req)
+                                                                                       {
+                                                                                            ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
+                                                                                       });
+
 
             return View(model);
         }
@@ -141,6 +154,13 @@ namespace GradientCalculator.Controllers
             {
                 ViewBag.ErrorMessage = _localizer["calculation_error"];
             }
+
+            this._respReqLoggerService.AddNewResponseRequestLog(new ResponseRequestLog(HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value,
+                                                                                       model.CalculationResultModel,
+                                                                                       req)
+                                                                                        {
+                                                                                            ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
+            });
 
             return View(model);
         }

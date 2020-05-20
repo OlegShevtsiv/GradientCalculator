@@ -9,6 +9,7 @@ using GradientCalculator.Configs;
 using GradientCalculator.Data.Sqlite;
 using GradientCalculator.Middlewares;
 using GradientCalculator.Middlewares.Filters;
+using GradientCalculator.Services.ResponseRequestLoggerService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;
@@ -35,6 +36,8 @@ namespace GradientCalculator
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<LanguageActionFilter>();
+
+            services.AddScoped<RespReqLoggerService>();
 
             services.AddSession(s => 
             {

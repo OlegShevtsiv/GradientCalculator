@@ -50,7 +50,7 @@ namespace GradientCalculator.Controllers
         }
 
         [HttpPost]
-        public IActionResult Calculate(MathExpressionRequest expresiion)
+        public IActionResult OrdinaryCalculator(MathExpressionRequest expresiion)
         {
             ViewBag.InputedValuesOfvariables = expresiion.ValuesOfVariables.Keys.ToList();
 
@@ -83,7 +83,7 @@ namespace GradientCalculator.Controllers
                                                                                             ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
             });
 
-            return View(nameof(this.OrdinaryCalculator), expresiion);
+            return View(expresiion);
         }
 
         public IActionResult Plot2D()

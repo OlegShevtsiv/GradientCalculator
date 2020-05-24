@@ -10,13 +10,13 @@
         <div class="input-group py-3">
             <label class="input-group-text" asp-for="Equation"></label>
             <input class="form-control" asp-for="Equation" id="gradientMethod_equation_input_id" required />
-            <span class="input-group-text" id="input_equation_error_message" style="color:darkred"></span>
+            <span class="input-group-text text-danger" id="input_equation_error_message"></span>
         </div>
 
         <div class="input-group pb-3">
             <label class="input-group-text" asp-for="Accuracy"></label>
             <input class="form-control" type="number" placeholder="0.00001" step="any" asp-for="Accuracy" required />
-            <span class="input-group-text" style="color:darkred" asp-validation-for="Accuracy"></span>
+            <span class="input-group-text text-danger" asp-validation-for="Accuracy"></span>
         </div>
 
         <div class="py-3" id="values_of_variables_list_id">
@@ -27,7 +27,7 @@
                     <div id="variable_element_id_@(v)" class="input-group col-lg-6 px-0 pb-1">
                         <label  class="input-group-text">x@(v) :</label>
                         <input class="form-control" type="number" asp-for="ValuesOfVariables[v]" step="any" required />
-                        <span class="input-group-text" style="color:darkred" asp-validation-for="ValuesOfVariables[v]"></span>
+                        <span class="input-group-text text-danger" asp-validation-for="ValuesOfVariables[v]"></span>
                     </div>
                 }
             }

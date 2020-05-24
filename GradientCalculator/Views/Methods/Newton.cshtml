@@ -19,13 +19,15 @@
 
     @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
     {
-        <span style="color:darkred">@ViewBag.ErrorMessage</span>
+        <div class="container border border-danger rounded col-lg-6">
+            <span class="text-danger">@ViewBag.ErrorMessage</span>
+        </div>
     }
 
-        @if (Model.CalculationResultModel != default)
-        {
-            <partial name="_CalculationResultsPartial.cshtml" model="Model.CalculationResultModel" />
-        }
+    @if (Model.CalculationResultModel != default)
+    {
+        <partial name="_CalculationResultsPartial.cshtml" model="Model.CalculationResultModel" />
+    }
 
     <div>
 

@@ -1,16 +1,18 @@
 ﻿@inject IViewLocalizer pageLocalizer;
-<div class="card">
-    <div class="card-header" id="headingOne">
-        <h5 class="mb-0">
-            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                @pageLocalizer["title"]
-            </button>
-        </h5>
-    </div>
+<div id="accordion">
+    <div class="card">
+        <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+                <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    @pageLocalizer["title"]
+                </button>
+            </h5>
+        </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card-body">
-            @Html.Raw(pageLocalizer["content"].Value)
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+                @Html.Raw(pageLocalizer["content"].Value)
+            </div>
         </div>
     </div>
 </div>

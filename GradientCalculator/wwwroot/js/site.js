@@ -29,10 +29,10 @@ input.oninput = function () {
                         if (!document.getElementById(`variable_element_id_${response.data[i].index}`)) {
 
                             valOfVarsList.insertAdjacentHTML('beforeend',
-                                `<div id="variable_element_id_${response.data[i].index}">
-                                        <label>${response.data[i].name} :</label><br>
-                                        <input type = "number" oninput="" data-val="true" data-val-number="The field must be a number." id="ValuesOfVariables_${response.data[i].index}_" name="ValuesOfVariables[${response.data[i].index}]" step="any" value="" required>
-                                        <span style = "color:darkred" class="field-validation-valid" data-valmsg-for="ValuesOfVariables[${response.data[i].index}]" data-valmsg-replace="true"></span>
+                                `<div id="variable_element_id_${response.data[i].index}" class="input-group col-lg-6 px-0 pb-1">
+                                        <label class="input-group-text ">${response.data[i].name} :</label>
+                                        <input class="form-control" type = "number" oninput="" data-val="true" data-val-number="The field must be a number." id="ValuesOfVariables_${response.data[i].index}_" name="ValuesOfVariables[${response.data[i].index}]" step="any" value="" required>
+                                        <span class="input-group-text" style = "color:darkred" class="field-validation-valid" data-valmsg-for="ValuesOfVariables[${response.data[i].index}]" data-valmsg-replace="true"></span>
                                     </div>`)
                         }
                     }

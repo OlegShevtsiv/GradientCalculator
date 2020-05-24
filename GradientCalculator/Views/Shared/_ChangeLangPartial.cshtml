@@ -1,5 +1,5 @@
 ﻿@model ChangeLangVM
-<div class="input-group mb-3">
+<div class="input-group">
     <form asp-controller="Values" asp-action="ChangeCulture" method="post">
         @{
             string currentLang = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName.ToLower();

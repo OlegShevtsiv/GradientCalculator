@@ -3,24 +3,26 @@
 
 @if (Model != default && Model.ExtremumPoint != default && Model.ExtremumPoint.Count > 0 && Model.FunctionValue != default && Model.IterationsAmount != default)
 {
-    <br />
+    <div class="container border border-success rounded col-lg-6">
 
-    string pointStringRow = Model.ExtremumPoint.Select(p => p.Name).Aggregate((x, y) => $"{x}, {y}");
+        @{string pointStringRow = Model.ExtremumPoint.Select(p => p.Name).Aggregate((x, y) => $"{x}, {y}");}
 
-    if (ViewBag.IsMinimum == true)
-    {
+        @if (ViewBag.IsMinimum == true)
+        {
         <p>@pageLocalizer["finded_extremum_minimum_point"]: M(@pointStringRow) =(@(Model.ExtremumPoint.Select(p => p.Value.ToString().Replace(",", ".")).Aggregate((x, y) => $"{x}, {y}")))</p>
-    }
-    else if (ViewBag.IsMinimum == false)
-    {
+        }
+        else if (ViewBag.IsMinimum == false)
+        {
         <p>@pageLocalizer["finded_extremum_maximum_point"]: M(@pointStringRow) =(@(Model.ExtremumPoint.Select(p => p.Value.ToString().Replace(",", ".")).Aggregate((x, y) => $"{x}, {y}")))</p>
-    }
-    else
-    {
+        }
+        else
+        {
         <p>@pageLocalizer["finded_extremum_point"]: M(@pointStringRow) =(@(Model.ExtremumPoint.Select(p => p.Value.ToString().Replace(",", ".")).Aggregate((x, y) => $"{x}, {y}")))</p>
+        }
+
+        <p>@pageLocalizer["function_value_in_that_point"]: F(M) = @Model.FunctionValue</p>
+
+        <p>@pageLocalizer["iterations_amount"]: @Model.IterationsAmount</p>
+    </div>
+
     }
-
-    <p>@pageLocalizer["function_value_in_that_point"]: F(M) = @Model.FunctionValue</p>
-
-    <p>@pageLocalizer["iterations_amount"]: @Model.IterationsAmount</p>
-}

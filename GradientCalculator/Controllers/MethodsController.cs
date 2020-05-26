@@ -23,9 +23,9 @@ namespace GradientCalculator.Controllers
     {
         private readonly IStringLocalizer<CommonResource> _localizer;
 
-        private readonly RespReqLoggerService _respReqLoggerService;
+        private readonly LiteDbStorageService _respReqLoggerService;
 
-        public MethodsController(IStringLocalizer<CommonResource> localizer, RespReqLoggerService respReqLoggerService)
+        public MethodsController(IStringLocalizer<CommonResource> localizer, LiteDbStorageService respReqLoggerService)
         {
             this._localizer = localizer;
             this._respReqLoggerService = respReqLoggerService;
@@ -86,11 +86,17 @@ namespace GradientCalculator.Controllers
             }
 
             this._respReqLoggerService.AddNewResponseRequestLog(new ResponseRequestLog(HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value,
-                                                                                       model.CalculationResultModel,
-                                                                                       req)
-                                                                                       {
-                                                                                            ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
-                                                                                       });
+
+                                                                           model.CalculationResultModel == null ? null : new CalcResponseLog(model.CalculationResultModel.ExtremumPoint.ToDictionary(k => k.Name, v => v.Value),
+                                                                                               model.CalculationResultModel.FunctionValue,
+                                                                                               model.CalculationResultModel.IterationsAmount),
+
+                                                                           new CalcRequestLog(req.Equation, req.ValuesOfVariables, req.Accuracy),
+
+                                                                           ResponseRequestLogType.CALCULATION)
+                                                                           {
+                                                                               ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
+                                                                           });
 
 
             return View(model);
@@ -156,11 +162,16 @@ namespace GradientCalculator.Controllers
             }
 
             this._respReqLoggerService.AddNewResponseRequestLog(new ResponseRequestLog(HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value,
-                                                                                       model.CalculationResultModel,
-                                                                                       req)
-                                                                                        {
-                                                                                            ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
-            });
+
+                                                                                       model.CalculationResultModel == null ? null : new CalcResponseLog(model.CalculationResultModel.ExtremumPoint.ToDictionary(k => k.Name, v => v.Value), 
+                                                                                                           model.CalculationResultModel.FunctionValue, 
+                                                                                                           model.CalculationResultModel.IterationsAmount),
+
+                                                                                       new CalcRequestLog(req.Equation, req.ValuesOfVariables, req.Accuracy),
+                                                                                       ResponseRequestLogType.CALCULATION)
+                                                                                       {
+                                                                                           ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
+                                                                                       });
 
             return View(model);
         }

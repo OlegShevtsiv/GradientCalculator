@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="content" xml:space="preserve">
-    <value>&lt;p&gt;Use this instruction to write your equation correct.&lt;/p&gt;
+    <value>&lt;p&gt;Use this instruction to write your function correct.&lt;/p&gt;
 &lt;p&gt;Variables - use pattern x{number=0..9}&lt;/p&gt;
 &lt;p&gt;Math constants - π or p = 3.14, e=2.71&lt;/p&gt;
 &lt;p&gt;Functions - sin(), cos(), asin(), acos(), tan(), cot(), arctan(), arccot(), sinh(), cosh(), tanh(), ln(), lg(), || .&lt;/p&gt;

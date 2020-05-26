@@ -9,7 +9,7 @@ namespace GradientCalculator.Models.Request
     public class MathExpressionRequest
     {
         [Required]
-        [Display(Name = "Equation")]
+        [Display(Name = "Function")]
         public string Equation { get; set; }
 
 

@@ -1,22 +1,39 @@
 ﻿@model EquationRequest;
 @inject IViewLocalizer pageLocalizer;
-    
+
 <form asp-controller="Methods" asp-action="@ViewBag.ActionName" method="post" class="pb-3">
     <div>
         <div class="invalid-feedback" asp-validation-summary="ModelOnly"></div>
 
-        <partial name="_InstructionPartial.cshtml"/>
+        <partial name="_InstructionPartial.cshtml" />
 
         <div class="input-group py-3">
-            <label class="input-group-text" asp-for="Equation"></label>
+
+            <div class="input-group-prepend">
+                <label class="input-group-text" asp-for="Equation"></label>
+                <label class="input-group-text text-right">y =</label>
+            </div>
+
             <input class="form-control" asp-for="Equation" id="gradientMethod_equation_input_id" required />
-            <span class="input-group-text text-danger" id="input_equation_error_message"></span>
+
+            <div class="input-group-append">
+                <span class="input-group-text text-danger" id="input_equation_error_message"></span>
+            </div>
+
         </div>
 
         <div class="input-group pb-3">
-            <label class="input-group-text" asp-for="Accuracy"></label>
+
+            <div class="input-group-prepend">
+                <label class="input-group-text" asp-for="Accuracy"></label>
+            </div>
+
             <input class="form-control" type="number" placeholder="0.00001" step="any" asp-for="Accuracy" required />
-            <span class="input-group-text text-danger" asp-validation-for="Accuracy"></span>
+
+            <div class="input-group-append">
+                <span class="input-group-text text-danger" asp-validation-for="Accuracy"></span>
+            </div>
+
         </div>
 
         <div class="py-3" id="values_of_variables_list_id">
@@ -25,9 +42,17 @@
                 foreach (var v in (ViewBag.InputedValuesOfvariables as List<int>))
                 {
                     <div id="variable_element_id_@(v)" class="input-group col-lg-6 px-0 pb-1">
-                        <label  class="input-group-text">x@(v) :</label>
+
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">x@(v) :</label>
+                        </div>
+
                         <input class="form-control" type="number" asp-for="ValuesOfVariables[v]" step="any" required />
-                        <span class="input-group-text text-danger" asp-validation-for="ValuesOfVariables[v]"></span>
+
+                        <div class="input-group-append">
+                            <span class="input-group-text text-danger" asp-validation-for="ValuesOfVariables[v]"></span>
+                        </div>
+
                     </div>
                 }
             }

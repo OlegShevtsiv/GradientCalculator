@@ -23,10 +23,10 @@ namespace GradientCalculator.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IStringLocalizer<CommonResource> _localizer;
-        private readonly RespReqLoggerService _respReqLoggerService;
+        private readonly LiteDbStorageService _respReqLoggerService;
 
 
-        public HomeController(ILogger<HomeController> logger, IStringLocalizer<CommonResource> localizer, RespReqLoggerService respReqLoggerService)
+        public HomeController(ILogger<HomeController> logger, IStringLocalizer<CommonResource> localizer, LiteDbStorageService respReqLoggerService)
         {
             _logger = logger;
             this._localizer = localizer;
@@ -77,11 +77,12 @@ namespace GradientCalculator.Controllers
             }
 
             this._respReqLoggerService.AddNewResponseRequestLog(new ResponseRequestLog(HttpContext.Request.Path.Value + HttpContext.Request.QueryString.Value,
-                                                                                       ViewBag.Result,
-                                                                                       expresiion)
-                                                                                        {
+                                                                                       new CalcResponseLog(null, ViewBag.Result, null),
+                                                                                       new CalcRequestLog(expresiion.Equation, expresiion.ValuesOfVariables, null),
+                                                                                       ResponseRequestLogType.CALCULATION)
+                                                                                       {
                                                                                             ErrorMessage = ViewBag.ErrorMessage ?? string.Empty
-            });
+                                                                                       });
 
             return View(expresiion);
         }

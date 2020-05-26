@@ -4,14 +4,19 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using GradientCalculator.Configs;
+using GradientCalculator.Data.Sqlite;
 using GradientCalculator.Models;
+using GradientCalculator.Services.ResponseRequestLoggerService;
+using GradientCalculator.Services.ResponseRequestLoggerService.Models;
 using GradientCalculator.ViewModels;
 using GradientMethods;
 using GradientMethods.ExceptionResult;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 
 namespace GradientCalculator.Controllers
 {
@@ -90,46 +95,48 @@ namespace GradientCalculator.Controllers
             return url;
         }
 
+        [Route("/GetCalculationLogs/{token}")]
+        public IActionResult GetCalculationLogs(string token) // not works
+        {
+            if (token != "tafKQsveRYqWjgQNv7OEJj9uxZzpPDea") 
+            {
+                return RedirectToActionPermanent(nameof(HomeController.NotFoundPage), "Home");
+            }
+            else 
+            {
+                using (LiteDbStorageService s = new LiteDbStorageService())
+                {
+                    var jsonSetting = new JsonSerializerOptions()
+                    {
+                        IgnoreNullValues = true,
+                        DictionaryKeyPolicy = JsonNamingPolicy.CamelCase
+                    };
 
-        //[Route("/t")]
-        //public object test() 
-        //{
-        //    FileInfo fileInfo = new FileInfo(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\en.png");
+                    //var result = new JsonResult(s.GetResponseRequestLogs(ResponseRequestLogType.CALCULATION), jsonSetting);
 
-        //    byte[] data = new byte[fileInfo.Length];
+                    return Json(s.GetResponseRequestLogs(ResponseRequestLogType.CALCULATION), jsonSetting);
+                }
+            }
+        }
 
-        //    using (FileStream fs = fileInfo.OpenRead())
-        //    {
-        //        fs.Read(data, 0, data.Length);
-        //    }
+        [Route("/GetExceptionsLogs/{token}")]
+        public IActionResult GetExceptionsLogs(string token) 
+        {
+            if (token != "tafKQsveRYqWjgQNv7OEJj9uxZzpPDea")
+            {
+                return RedirectToActionPermanent(nameof(HomeController.NotFoundPage), "Home");
+            }
+            else
+            {
+                using (SqliteContext s = new SqliteContext())
+                {
+                    var result = s.ExceptionLogs.ToList();
 
-        //    var res = Methods.ResizeImage(50, 20, data);
+                    return Json(result);
+                }
+            }
+        }
 
-        //    using (var ms = new MemoryStream(res))
-        //    {
-        //        Image.FromStream(ms).Save(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\en1.png");
-        //    }
-
-
-        //    fileInfo = new FileInfo(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\uk.png");
-
-        //    data = new byte[fileInfo.Length];
-
-        //    using (FileStream fs = fileInfo.OpenRead())
-        //    {
-        //        fs.Read(data, 0, data.Length);
-        //    }
-
-        //    res = Methods.ResizeImage(50, 20, data);
-
-        //    using (var ms = new MemoryStream(res))
-        //    {
-        //        Image.FromStream(ms).Save(@"C:\Users\User\Desktop\Проги\GradientCalculator\GradientCalculator\wwwroot\img\flags\uk1.png");
-        //    }
-
-
-
-        //    return null;
-        //}
+        
     }
 }

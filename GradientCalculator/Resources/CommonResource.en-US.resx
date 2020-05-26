@@ -132,14 +132,14 @@
   <data name="current_lang" xml:space="preserve">
     <value>English</value>
   </data>
-  <data name="Equation" xml:space="preserve">
-    <value>Equation</value>
-  </data>
   <data name="equation_is_not_valid" xml:space="preserve">
     <value>Equation is not valid!</value>
   </data>
   <data name="error_invalid_accuracy" xml:space="preserve">
     <value>Accuracy is not valid! It has to be bigger than 0 and less than 0.1!</value>
+  </data>
+  <data name="Function" xml:space="preserve">
+    <value>Function</value>
   </data>
   <data name="gradientDescend_nav_select_option" xml:space="preserve">
     <value>Gradient descend</value>

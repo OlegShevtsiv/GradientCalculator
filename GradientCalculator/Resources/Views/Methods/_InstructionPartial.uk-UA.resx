@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="content" xml:space="preserve">
-    <value>&lt;p&gt;Використовуйте дану інструкцію для правильного написання рівняння.&lt;/p&gt;
+    <value>&lt;p&gt;Використовуйте дану інструкцію для правильного написання функції.&lt;/p&gt;
 &lt;p&gt;Змінні - використовуйте патерн x{number=0..9}&lt;/p&gt;
 &lt;p&gt;Математичні константи - π or p = 3.14, e=2.71&lt;/p&gt;
 &lt;p&gt;Функції - sin(), cos(), asin(), acos(), tan(), cot(), arctan(), arccot(), sinh(), cosh(), tanh(), ln(), lg(), || .&lt;/p&gt;</value>

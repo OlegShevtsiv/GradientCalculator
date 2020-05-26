@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace GradientCalculator.Services.ResponseRequestLoggerService
 {
-    public class RespReqLoggerService : IDisposable
+    public class LiteDbStorageService : IDisposable
     {
-        private const string connectionString = @"ResponseRequestStorage.db";
+        private const string connectionString = @"LiteDbStorage.db";
 
         private LiteDatabase db = new LiteDatabase(connectionString);
 
@@ -22,7 +22,7 @@ namespace GradientCalculator.Services.ResponseRequestLoggerService
         }
 
 
-        public RespReqLoggerService()
+        public LiteDbStorageService()
         {
 
         }
@@ -37,6 +37,19 @@ namespace GradientCalculator.Services.ResponseRequestLoggerService
             this.ResponseRequestLogItems.Insert(newLog);
 
             return true;
+        }
+
+        public List<ResponseRequestLog> GetResponseRequestLogs(ResponseRequestLogType? type) 
+        {
+            if (type != null)
+            {
+                string typeStr = type.ToString();
+                return this.ResponseRequestLogItems.Find(Query.EQ(nameof(ResponseRequestLog.Type), typeStr)).ToList();
+            }
+            else 
+            {
+                return this.ResponseRequestLogItems.FindAll().ToList();
+            }
         }
 
         public void Dispose()

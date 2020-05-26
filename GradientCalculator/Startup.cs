@@ -37,7 +37,7 @@ namespace GradientCalculator
         {
             services.AddScoped<LanguageActionFilter>();
 
-            services.AddScoped<RespReqLoggerService>();
+            services.AddScoped<LiteDbStorageService>();
 
             services.AddSession(s => 
             {

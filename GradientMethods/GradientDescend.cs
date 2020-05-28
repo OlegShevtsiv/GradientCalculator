@@ -29,6 +29,10 @@ namespace GradientMethods
 
             double a = 1.0d;
 
+            double b = 1.1;
+
+            int checkingMonotonyAmount = 1;
+
             do
             {
                 Sum = 0.0d;
@@ -46,14 +50,21 @@ namespace GradientMethods
 
                 if (res2 >= res1) //check monotony
                 {
-                    a /= 1.1;
+                    if (checkingMonotonyAmount % 10 == 0) 
+                    {
+                        b += 0.5;
+                    }
+                    a /= b;
+                    checkingMonotonyAmount++;
                 }
                 else
                 {
+                    checkingMonotonyAmount = 1;
+                    b = 1.1;
                     M0 = M1;
                     iterationsAmount++;
 
-                    if (iterationsAmount >= 1_000_000) 
+                    if (iterationsAmount >= 1_000_000)
                     {
                         throw new LocalizedException("extremum_not_found");
                     }

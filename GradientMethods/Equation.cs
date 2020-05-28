@@ -193,7 +193,7 @@ namespace GradientMethods
 
         private bool isUnary(char op, out char newOp)
         {
-            if ((char)(-op) == '+' || (char)(-op) == '-')
+            if ((char)(-op) == '+' || (char)(-op) == '-' || (char)(-op) == '–')
             {
                 newOp = (char)(-op);
                 return true;
@@ -248,6 +248,9 @@ namespace GradientMethods
                     case '-':
                         operands.Push(-oper);
                         break;
+                    case '–':
+                        operands.Push(-oper);
+                        break;
                 }
             }
             else
@@ -261,6 +264,9 @@ namespace GradientMethods
                         operands.Push(first + second);
                         break;
                     case '-':
+                        operands.Push(first - second);
+                        break;
+                    case '–':
                         operands.Push(first - second);
                         break;
                     case '*':
@@ -470,7 +476,7 @@ namespace GradientMethods
 
         private int GetPriority(char op)
         {
-            if (op == '+' || op == '-')
+            if (op == '+' || op == '-' || op == '–')
             {
                 return 1;
             }
@@ -494,6 +500,7 @@ namespace GradientMethods
         {
             if (o == '+'
              || o == '-'
+             || o == '–'
              || o == '*'
              || o == '/'
              || o == '÷'
